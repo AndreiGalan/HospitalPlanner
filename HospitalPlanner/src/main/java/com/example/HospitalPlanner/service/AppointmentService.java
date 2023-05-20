@@ -13,4 +13,5 @@ public interface AppointmentService {
     void create(AppointmentCreationDto appointmentCreationDto);
     List<Appointment> findByDoctorId(Long Id);
     List<Appointment> findByPatientId(Long Id);
+    void delete(Long id);
 }

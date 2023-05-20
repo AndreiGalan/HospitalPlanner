@@ -17,4 +17,18 @@ public class TimeInterval {
     private LocalTime start;
     private LocalTime end;
 
+    @Override
+    public String toString() {
+        return "TimeInterval{" +
+                "date=" + date +
+                ", start=" + start +
+                ", end=" + end +
+                '}' + "\n";
+    }
+
 }
+
+
+
+
+

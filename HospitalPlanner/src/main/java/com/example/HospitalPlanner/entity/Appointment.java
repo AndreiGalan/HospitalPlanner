@@ -18,6 +18,7 @@ import java.time.LocalTime;
 public class Appointment {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "doctor_id")
@@ -31,4 +32,16 @@ public class Appointment {
     private LocalTime appointmentTime ;
     @Column(name = "appointment_type")
     private String appointmentType ;
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "id=" + id +
+                ", doctorEntity=" + doctorEntity +
+                ", patientId=" + patientId +
+                ", appointmentDate=" + appointmentDate +
+                ", appointmentTime=" + appointmentTime +
+                ", appointmentType='" + appointmentType + '\'' +
+                '}' + "\n";
+    }
 }

@@ -5,10 +5,7 @@ import com.example.HospitalPlanner.entity.Appointment;
 import com.example.HospitalPlanner.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,33 +19,40 @@ public class AppointmentController {
         this.appointmentService = appointmentService;
     }
 
-    @GetMapping("")
+    @GetMapping(value = "", produces = "application/json")
     public ResponseEntity<List<Appointment>> findAll() {
+        System.out.println("find all");
         List<Appointment> appointments = appointmentService.findAll();
         return ResponseEntity.ok(appointments);
     }
 
-    @GetMapping("/doctor/id")
-    public ResponseEntity<List<Appointment>> findByDoctorId(Long id) {
+    @GetMapping(value = "/doctor/{id}", produces = "application/json")
+    public ResponseEntity<List<Appointment>> findByDoctorId(@PathVariable("patient_id") Long id) {
         List<Appointment> appointments = appointmentService.findByDoctorId(id);
         return ResponseEntity.ok(appointments);
     }
 
-    @GetMapping("/patient/id")
-    public ResponseEntity<List<Appointment>> findByPatientId(Long id) {
+    @GetMapping(value = "/patient/{id}", produces = "application/json")
+    public ResponseEntity<List<Appointment>> findByPatientId(@PathVariable("doctor_id") Long id) {
         List<Appointment> appointments = appointmentService.findByPatientId(id);
         return ResponseEntity.ok(appointments);
     }
 
-    @GetMapping("/id")
-    public ResponseEntity<Appointment> findById(Long id) {
+    @GetMapping(value = "/id", produces = "application/json")
+    public ResponseEntity<Appointment> findById(@PathVariable("id") Long id) {
         Appointment appointment = appointmentService.findById(id);
         return ResponseEntity.ok(appointment);
     }
-    @PostMapping("/create")
-    public ResponseEntity<Void> create(AppointmentCreationDto appointmentCreationDto) {
+
+    @PostMapping(value = "/create", produces = "application/json")
+    public void create(@RequestBody AppointmentCreationDto appointmentCreationDto) {
+        System.out.println("create");
         appointmentService.create(appointmentCreationDto);
-        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        appointmentService.delete(id);
     }
 
 }

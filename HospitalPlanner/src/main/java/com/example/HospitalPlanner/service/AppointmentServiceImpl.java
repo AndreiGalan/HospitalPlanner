@@ -3,30 +3,32 @@ package com.example.HospitalPlanner.service;
 import com.example.HospitalPlanner.dto.AppointmentCreationDto;
 import com.example.HospitalPlanner.entity.Appointment;
 import com.example.HospitalPlanner.entity.DoctorEntity;
+import com.example.HospitalPlanner.entity.PatientEntity;
 import com.example.HospitalPlanner.repo.AppointmentRepository;
 import com.example.HospitalPlanner.repo.DoctorRepository;
+import com.example.HospitalPlanner.repo.PatientRepository;
 import com.example.HospitalPlanner.util.AppointmentType;
 import com.example.HospitalPlanner.util.TimeInterval;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
 
     private final AppointmentRepository appointmentRepository;
     private final DoctorRepository doctorRepository;
+    private final PatientRepository patientRepository;
 
     @Autowired
-    public AppointmentServiceImpl(AppointmentRepository appointmentRepository, DoctorRepository doctorRepository) {
+    public AppointmentServiceImpl(AppointmentRepository appointmentRepository, DoctorRepository doctorRepository, PatientRepository patientRepository) {
         this.appointmentRepository = appointmentRepository;
         this.doctorRepository = doctorRepository;
+        this.patientRepository = patientRepository;
     }
 
 
@@ -44,9 +46,25 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public void create(AppointmentCreationDto appointmentCreationDto) {
-        Integer durationOfAppointment = AppointmentType.valueOf(appointmentCreationDto.getType()).getValue();
 
-        DoctorEntity doctor = doctorRepository.findById(appointmentCreationDto.getDoctorId()).orElse(null); // TODO - THROW CUSTOM EXCEPTION
+        AppointmentType appointmentType = AppointmentType.getType(appointmentCreationDto.getType());
+
+        if (appointmentType == null) {
+            // Handle invalid appointment type
+            return;
+        }
+
+        Integer durationOfAppointment = appointmentType.getValue();
+
+        DoctorEntity doctor = doctorRepository.findById(appointmentCreationDto.getDoctorId()).orElse(null);
+
+        PatientEntity patient = patientRepository.findById(appointmentCreationDto.getPatientId()).orElse(null);
+
+        if (doctor == null || patient == null) {
+            // Handle invalid doctor or patient
+            return;
+        }
+        // TODO - THROW CUSTOM EXCEPTION
 
         List<Appointment> appointmentsDoctor = findByDoctorId(appointmentCreationDto.getDoctorId()).stream()
                 .filter(appointment -> appointmentCreationDto.getTimeIntervals().stream()
@@ -60,8 +78,32 @@ public class AppointmentServiceImpl implements AppointmentService {
                     .toList();
 
             //TODO - DISCUTIE despre cum sa facem cu intervalele care sunt la aceeasi data dar nu se suprapun
-            generateFreeIntervals(busyAppointments,doctor,durationOfAppointment);
+
+            List<TimeInterval> freeTimeIntervals = generateFreeIntervals(busyAppointments,doctor,durationOfAppointment, timeInterval.getDate(), timeInterval.getStart(), timeInterval.getEnd());
+
+            if(!freeTimeIntervals.isEmpty()) {
+                TimeInterval freeInterval = freeTimeIntervals.get(0);
+
+                if(freeInterval.getStart().isBefore(doctor.getProgramStart()) || freeInterval.getEnd().isAfter(doctor.getProgramEnd()))
+                    throw new RuntimeException("Doctor is not available at this time");
+
+                if(freeInterval.getStart().isBefore(timeInterval.getStart()))
+                    freeInterval.setStart(timeInterval.getStart());
+
+                System.out.println(freeInterval);
+                Appointment appointment = Appointment.builder()
+                        .appointmentDate(freeInterval.getDate())
+                        .appointmentTime(freeInterval.getStart())
+                        .doctorEntity(doctor)
+                        .patientId(patient)
+                        .appointmentType(appointmentCreationDto.getType())
+                        .build();
+                appointmentRepository.save(appointment);
+                return;
+            }
         }
+
+        throw new RuntimeException("Doctor is busy at this time");
 
 
 //
@@ -77,23 +119,33 @@ public class AppointmentServiceImpl implements AppointmentService {
 //            }
 //        }
 
-        appointmentRepository.save(new Appointment());
-
     }
 
-    private List<TimeInterval> generateFreeIntervals(List<Appointment> busyAppointments,DoctorEntity doctor, Integer duration) {
+    private List<TimeInterval> generateFreeIntervals(List<Appointment> busyAppointments,DoctorEntity doctor, Integer duration, LocalDate date, LocalTime start, LocalTime end) {
         List<TimeInterval> freeTimeIntervals = new ArrayList<>();
-
+        System.out.println(busyAppointments);
         // intre inceperea programului si primului appointment
         LocalTime programStart = doctor.getProgramStart();
+        if(busyAppointments.isEmpty()) {
+            TimeInterval freeInterval = TimeInterval.builder()
+                    .date(date)
+                    .start(start)
+                    .end(programStart.plusMinutes(duration))
+                    .build();
+            freeTimeIntervals.add(freeInterval);
+            return freeTimeIntervals;
+        }
+
         LocalTime firstBusyAppointmentTime = busyAppointments.get(0).getAppointmentTime();
         if (Duration.between(programStart, firstBusyAppointmentTime).toMinutes() >= duration) {
+
             TimeInterval freeInterval = TimeInterval.builder()
                     .date(busyAppointments.get(0).getAppointmentDate())
                     .start(programStart)
                     .end(firstBusyAppointmentTime)
                     .build();
-            freeTimeIntervals.add(freeInterval);
+            if(isIntervalIntersecting(freeInterval.getStart(),freeInterval.getEnd(),start,end))
+                freeTimeIntervals.add(freeInterval);
         }
 
         // intre fiecare 2 appointments
@@ -111,7 +163,8 @@ public class AppointmentServiceImpl implements AppointmentService {
                 freeInterval.setDate(currentAppointment.getAppointmentDate());
                 freeInterval.setStart(completedCurrentAppointmentTime);
                 freeInterval.setEnd(nextAppointmentTime);
-                freeTimeIntervals.add(freeInterval);
+                if(isIntervalIntersecting(freeInterval.getStart(),freeInterval.getEnd(),start,end))
+                    freeTimeIntervals.add(freeInterval);
             }
         }
 
@@ -126,21 +179,39 @@ public class AppointmentServiceImpl implements AppointmentService {
                     .start(completedLastBusyAppointmentTime)
                     .end(programEnd)
                     .build();
-            freeTimeIntervals.add(freeInterval);
+            if(isIntervalIntersecting(freeInterval.getStart(),freeInterval.getEnd(),start,end))
+                freeTimeIntervals.add(freeInterval);
         }
 
+        Collections.sort(freeTimeIntervals, Comparator.comparingLong(interval -> Duration.between(interval.getStart(), interval.getEnd()).toMinutes()));
+
+        System.out.println(freeTimeIntervals);
+
         return freeTimeIntervals;
+    }
+
+    public static boolean isIntervalIntersecting(LocalTime x1, LocalTime x2, LocalTime y1, LocalTime y2) {
+        return (x1.isAfter(y1) && x1.isBefore(y2)) ||
+                (x2.isAfter(y1) && x2.isBefore(y2)) ||
+                (y1.isAfter(x1) && y1.isBefore(x2)) ||
+                (y2.isAfter(x1) && y2.isBefore(x2)) ||
+                x1.equals(y1) || x2.equals(y2);
     }
 
     @Override
     public List<Appointment> findByDoctorId(Long Id) {
         List<Appointment> appointments = Optional.ofNullable( appointmentRepository.findByDoctorId(Id)).orElse(new ArrayList<>());
-        return null;
+        return appointments;
     }
 
     @Override
     public List<Appointment> findByPatientId(Long Id) {
         List<Appointment> appointments = Optional.ofNullable( appointmentRepository.findByPatientId(Id)).orElse(new ArrayList<>()) ;
-        return null;
+        return appointments;
+    }
+
+    @Override
+    public void delete(Long id) {
+        appointmentRepository.deleteById(id);
     }
 }

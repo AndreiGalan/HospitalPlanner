@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
@@ -16,4 +17,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     @Query(value = "SELECT * FROM appointments where patient_id = :id", nativeQuery = true)
     List<Appointment> findByPatientId(@Param(value = "id") Long Id);
+
+    @Query(value = "SELECT * FROM appointments where id = :id", nativeQuery = true)
+    Optional<Appointment> findById(@Param(value = "id") Long Id);
 }
