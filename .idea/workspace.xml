@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ce9e838c-b9af-4264-86d3-7ef36dd95ed4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Java_proiect.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/aws.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/main/java/com/example/HospitalPlanner/HospitalPlannerApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/main/java/com/example/HospitalPlanner/controllers/AppointmentController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/main/java/com/example/HospitalPlanner/controllers/DoctorController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/main/java/com/example/HospitalPlanner/controllers/PatientController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/main/java/com/example/HospitalPlanner/dto/AppointmentCreationDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/main/java/com/example/HospitalPlanner/entity/Appointment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/main/java/com/example/HospitalPlanner/entity/DoctorEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/main/java/com/example/HospitalPlanner/entity/PatientEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/main/java/com/example/HospitalPlanner/repo/AppointmentRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/main/java/com/example/HospitalPlanner/repo/DoctorRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/main/java/com/example/HospitalPlanner/repo/PatientRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/main/java/com/example/HospitalPlanner/service/AppointmentService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/main/java/com/example/HospitalPlanner/service/AppointmentServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/main/java/com/example/HospitalPlanner/service/DoctorService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/main/java/com/example/HospitalPlanner/service/DoctorServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/main/java/com/example/HospitalPlanner/service/PatientService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/main/java/com/example/HospitalPlanner/service/PatientServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/main/java/com/example/HospitalPlanner/util/AppointmentType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/main/java/com/example/HospitalPlanner/util/TimeInterval.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HospitalPlanner/src/test/java/com/example/HospitalPlanner/HospitalPlannerApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2QD0aRlToZZdiQkNG624pZxut3B" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/Andrei/OneDrive/Documente/GitHub/HospitalPlanner/HospitalPlanner"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="AZURE_FUNCTION_SUPPORT" factoryName="Run Functions">
+      <option name="appName" />
+      <option name="appServicePlanName" />
+      <option name="appServicePlanResourceGroup" />
+      <option name="appSettingsKey" value="6c0ddbe8-bb63-481f-b7e4-ef89adc88a5e" />
+      <option name="artifact" />
+      <option name="debugOptions" />
+      <option name="deployment" />
+      <option name="deploymentStagingDirectoryPath" />
+      <option name="funcPath" />
+      <option name="functionHostArguments" />
+      <option name="hostJsonPath" />
+      <option name="insightsName" />
+      <option name="instrumentationKey" />
+      <option name="javaVersion" />
+      <option name="localSettingsJsonPath" />
+      <option name="moduleName" />
+      <option name="os" />
+      <option name="pricingTier" />
+      <option name="providerMap">
+        <map />
+      </option>
+      <option name="region" />
+      <option name="resourceGroup" />
+      <option name="stagingFolder" />
+      <option name="subscription" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ce9e838c-b9af-4264-86d3-7ef36dd95ed4" name="Changes" comment="" />
+      <created>1684872907333</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1684872907333</updated>
+    </task>
+    <servers />
+  </component>
+</project>

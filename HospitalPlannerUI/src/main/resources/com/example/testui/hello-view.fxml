@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="688.0" prefWidth="825.0" style="-fx-background-color: #eda489;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.testui.Controllers.MainMenuController">
+   <top>
+      <AnchorPane fx:id="topAnchorPane" prefHeight="95.0" prefWidth="825.0" style="-fx-background-color: #d15555;" BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="765.0" layoutY="32.0" mnemonicParsing="false" onAction="#xButtonAction" prefHeight="30.0" prefWidth="20.0" text="X" fx:id="xButton">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
+            <Text fill="#3058d0" layoutX="112.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hospital planner">
+               <font>
+                  <Font name="Century Gothic Bold" size="27.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="71.0" fitWidth="83.0" layoutX="24.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Logo.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="721.0" layoutY="32.0" mnemonicParsing="false" onAction="#xButtonAction" prefHeight="28.0" prefWidth="30.0" text="–" fx:id="xButton1">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+         </children></AnchorPane>
+   </top>
+   <center>
+      <AnchorPane prefHeight="724.0" prefWidth="825.0" BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane layoutX="14.0" layoutY="142.0">
+               <center>
+                  <AnchorPane prefHeight="357.0" prefWidth="798.0" style="-fx-background-color: #da6969;" BorderPane.alignment="CENTER">
+                     <children>
+                        <Line endX="2.0" endY="266.0" layoutX="397.0" layoutY="118.0" startX="2.0" startY="-117.0" stroke="#eda489" strokeLineCap="ROUND" strokeWidth="5.0">
+                           <fill>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="1.0" green="1.0" blue="1.0" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </fill>
+                        </Line>
+                     </children>
+                  </AnchorPane>
+               </center>
+            </BorderPane>
+            <Text layoutX="257.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter your data here" wrappingWidth="311.89453125">
+               <font>
+                  <Font name="Century Gothic Bold" size="29.0" />
+               </font>
+            </Text>
+            <TextField layoutX="36.0" layoutY="202.0" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #eda489;">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextField>
+            <Text layoutX="34.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First name">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Text>
+            <Text layoutX="34.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last name">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Text>
+            <TextField layoutX="34.0" layoutY="332.0" prefHeight="25.0" prefWidth="255.0" style="-fx-background-color: #eda489;">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <DatePicker layoutX="34.0" layoutY="460.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="188.0">
+               <effect>
+                  <Glow />
+               </effect>
+            </DatePicker>
+            <Text layoutX="34.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of birth ">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Text>
+            <Text layoutX="173.0" layoutY="427.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(mm/dd/yyyy)">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Text>
+            <TextField alignment="CENTER_RIGHT" layoutX="545.0" layoutY="202.0" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #eda489;">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextField>
+            <Text layoutX="724.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Adress">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Text>
+            <TextField alignment="CENTER_RIGHT" layoutX="544.0" layoutY="332.0" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #eda489;">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextField>
+            <Text layoutX="726.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Text>
+            <TextField alignment="CENTER_RIGHT" layoutX="544.0" layoutY="457.0" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #eda489;">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextField>
+            <Text layoutX="640.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone number">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Text>
+            <Button layoutX="379.0" layoutY="540.0" mnemonicParsing="false" text="Submit">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

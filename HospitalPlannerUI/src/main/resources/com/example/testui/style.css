@@ -1,0 +1,9 @@
+#xButton{
+    -fx-background-color: #2B2B2B;
+    -fx-text-fill: #ffffff;
+}
+
+#xButton:hover{
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #2B2B2B;
+}
