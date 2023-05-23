@@ -72,7 +72,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .toList();
 
         for (TimeInterval timeInterval : appointmentCreationDto.getTimeIntervals()) {
-            List<Appointment> busyAppointments = appointmentsDoctor.stream() // TODO - IMPORT FROM REPO BY DATE AND DOCTOR ID
+            List<Appointment> busyAppointments = appointmentsDoctor.stream() // TODO - IMPORT FROM REPO BY DATE AND DOCTOR ID (PLSQL)
                     .filter(appointment -> appointment.getAppointmentDate().equals(timeInterval.getDate()))
                     .sorted(Comparator.comparing(Appointment::getAppointmentTime))
                     .toList();
@@ -84,9 +84,6 @@ public class AppointmentServiceImpl implements AppointmentService {
             if(!freeTimeIntervals.isEmpty()) {
                 TimeInterval freeInterval = freeTimeIntervals.get(0);
 
-                if(freeInterval.getStart().isBefore(doctor.getProgramStart()) || freeInterval.getEnd().isAfter(doctor.getProgramEnd()))
-                    throw new RuntimeException("Doctor is not available at this time");
-
                 if(freeInterval.getStart().isBefore(timeInterval.getStart()))
                     freeInterval.setStart(timeInterval.getStart());
 
@@ -95,7 +92,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                         .appointmentDate(freeInterval.getDate())
                         .appointmentTime(freeInterval.getStart())
                         .doctorEntity(doctor)
-                        .patientId(patient)
+                        .patientEntity(patient)
                         .appointmentType(appointmentCreationDto.getType())
                         .build();
                 appointmentRepository.save(appointment);
@@ -105,19 +102,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         throw new RuntimeException("Doctor is busy at this time");
 
-
-//
-//        if(appointmentsDoctor == null || appointmentsDoctor.isEmpty()) {
-//
-//        }
-//
-//        if (appointmentsDoctor.size() > 0) {
-//            for (Appointment appointment1 : appointmentsDoctor) {
-//                if () {
-//                    throw new RuntimeException("Doctor is busy at this time");
-//                }
-//            }
-//        }
 
     }
 

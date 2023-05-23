@@ -139,7 +139,7 @@
                   <Font name="System Bold" size="22.0" />
                </font>
             </Text>
-            <Button layoutX="379.0" layoutY="540.0" mnemonicParsing="false" text="Submit">
+            <Button layoutX="379.0" layoutY="540.0" mnemonicParsing="false" text="Submit" fx:id="submitButton" onAction="#submitButtonAction" >
                <font>
                   <Font size="15.0" />
                </font>

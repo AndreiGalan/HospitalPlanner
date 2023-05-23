@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="HospitalPlanner@localhost">
+  <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.48">
+    <root id="1"/>
+    <database id="2" parent="1" name="HerbalWebManager"/>
+    <database id="3" parent="1" name="HospitalPlanner">
+      <Current>1</Current>
+    </database>
+    <database id="4" parent="1" name="lab8Java"/>
+    <database id="5" parent="1" name="postgres"/>
+    <database id="6" parent="1" name="solomon_test"/>
+    <database id="7" parent="1" name="template0"/>
+    <database id="8" parent="1" name="template1"/>
+    <database id="9" parent="1" name="test1"/>
+    <schema id="10" parent="3" name="information_schema"/>
+    <schema id="11" parent="3" name="pg_catalog"/>
+    <schema id="12" parent="3" name="public">
+      <Current>1</Current>
+    </schema>
+  </database-model>
+</dataSource>

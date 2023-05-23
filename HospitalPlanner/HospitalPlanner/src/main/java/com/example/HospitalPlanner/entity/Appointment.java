@@ -25,7 +25,7 @@ public class Appointment {
     private DoctorEntity doctorEntity;
     @ManyToOne
     @JoinColumn(name = "patient_id")
-    private PatientEntity patientId ;
+    private PatientEntity patientEntity;
     @Column(name = "appointment_date")
     private LocalDate appointmentDate ;
     @Column(name = "appointment_time")
@@ -38,7 +38,7 @@ public class Appointment {
         return "Appointment{" +
                 "id=" + id +
                 ", doctorEntity=" + doctorEntity +
-                ", patientId=" + patientId +
+                ", patientId=" + patientEntity +
                 ", appointmentDate=" + appointmentDate +
                 ", appointmentTime=" + appointmentTime +
                 ", appointmentType='" + appointmentType + '\'' +

@@ -27,13 +27,13 @@ public class AppointmentController {
     }
 
     @GetMapping(value = "/doctor/{id}", produces = "application/json")
-    public ResponseEntity<List<Appointment>> findByDoctorId(@PathVariable("patient_id") Long id) {
+    public ResponseEntity<List<Appointment>> findByDoctorId(@PathVariable("id") Long id) {
         List<Appointment> appointments = appointmentService.findByDoctorId(id);
         return ResponseEntity.ok(appointments);
     }
 
     @GetMapping(value = "/patient/{id}", produces = "application/json")
-    public ResponseEntity<List<Appointment>> findByPatientId(@PathVariable("doctor_id") Long id) {
+    public ResponseEntity<List<Appointment>> findByPatientId(@PathVariable("id") Long id) {
         List<Appointment> appointments = appointmentService.findByPatientId(id);
         return ResponseEntity.ok(appointments);
     }

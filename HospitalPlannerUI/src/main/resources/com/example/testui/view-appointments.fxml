@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="688.0" prefWidth="825.0" style="-fx-background-color: #eda489;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.testui.Controllers.ViewAppointmentsController">
+    <top>
+        <AnchorPane fx:id="topAnchorPane" prefHeight="95.0" prefWidth="825.0" style="-fx-background-color: #d15555;" BorderPane.alignment="CENTER">
+            <children>
+                <Button layoutX="765.0" layoutY="32.0" mnemonicParsing="false" onAction="#xButtonAction" prefHeight="30.0" prefWidth="20.0" text="X" fx:id="xButton">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font></Button>
+                <Text fill="#3058d0" layoutX="112.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hospital planner">
+                    <font>
+                        <Font name="Century Gothic Bold" size="27.0" />
+                    </font>
+                </Text>
+                <ImageView fitHeight="71.0" fitWidth="83.0" layoutX="24.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@Logo.png" />
+                    </image>
+                </ImageView>
+                <Button layoutX="721.0" layoutY="32.0" mnemonicParsing="false" onAction="#xButtonAction" prefHeight="28.0" prefWidth="30.0" text="–" fx:id="xButton1">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Button>
+            </children></AnchorPane>
+    </top>
+    <center>
+        <AnchorPane prefHeight="724.0" prefWidth="825.0" BorderPane.alignment="CENTER">
+            <children>
+                <BorderPane layoutX="14.0" layoutY="142.0" />
+
+                <Button fx:id="backButton" layoutX="379.0" layoutY="540.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <ListView fx:id="appointmentsListView" layoutX="289.0" layoutY="152.0" prefHeight="200.0" prefWidth="200.0" />
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>
