@@ -5,6 +5,8 @@ import com.example.testui.Controllers.ViewAppointmentsController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
 
 import java.util.Objects;
@@ -53,5 +55,18 @@ public class SceneManager {
         } catch (Exception e) {
            throw new RuntimeException(e);
         }
+    }
+
+    public void showPopUp(String message) {
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.initOwner(stage);
+        dialog.setTitle("Pop-up");
+
+        DialogPane dialogPane = new DialogPane();
+        dialogPane.setContentText(message);
+        dialogPane.getButtonTypes().add(javafx.scene.control.ButtonType.OK);
+
+        dialog.setDialogPane(dialogPane);
+        dialog.showAndWait();
     }
 }
