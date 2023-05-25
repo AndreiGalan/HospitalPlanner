@@ -1,9 +1,10 @@
 package com.example.HospitalPlanner.util;
 
 public enum AppointmentType {
-    CONSULTATION("consultation",20),
-    SURGERY("surgery",60),
-    THERAPY("therapy",100);
+    CONSULTATION("Consultation",20),
+    SURGERY("Surgery",60),
+    THERAPY("Therapy",100),
+    VACCINATION("Vaccination",10);
 
     private int value;
     private String name;
