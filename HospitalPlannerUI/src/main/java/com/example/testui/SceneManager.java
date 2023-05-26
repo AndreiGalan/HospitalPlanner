@@ -2,12 +2,14 @@ package com.example.testui;
 
 import com.example.testui.Controllers.MainMenuController;
 import com.example.testui.Controllers.ViewAppointmentsController;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.util.Objects;
 
@@ -16,6 +18,7 @@ public class SceneManager {
 
     public SceneManager(Stage stage){
         this.stage = stage;
+        stage.initStyle(StageStyle.UNDECORATED);
     }
 
     public void showMainMenu(){
@@ -27,8 +30,7 @@ public class SceneManager {
             MainMenuController mainMenuController = loader.getController();
             mainMenuController.setSceneManager(this);
 
-            stage.setTitle("Hello!");
-            //stage.initStyle(StageStyle.UNDECORATED); // EXCEPTION : java.lang.IllegalStateException: Cannot set style once stage has been set visible
+
             stage.setScene(scene);
             stage.show();
 
@@ -48,8 +50,6 @@ public class SceneManager {
             Scene scene = new Scene(root);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
 
-            stage.setTitle("View Appointments");
-            //stage.initStyle(StageStyle.UNDECORATED); // EXCEPTION : java.lang.IllegalStateException: Cannot set style once stage has been set visible
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {

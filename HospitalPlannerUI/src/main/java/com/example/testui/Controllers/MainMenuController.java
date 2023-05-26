@@ -3,10 +3,13 @@ package com.example.testui.Controllers;
 import com.example.testui.SceneManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
+import java.time.LocalDate;
 
 public class MainMenuController {
 
@@ -37,7 +40,7 @@ public class MainMenuController {
     private DatePicker dateOfBirth;
 
     @FXML
-    private TextField adress;
+    private TextField address;
 
     @FXML
     private TextField phoneNumber;
@@ -46,12 +49,26 @@ public class MainMenuController {
     private TextField email;
 
     @FXML
-    private void initialize() {;
+    private Button dropButton;
+
+    @FXML
+    private void initialize() {
         topAnchorPane.setOnMousePressed(e -> topAnchorPane.setOnMouseDragged(e2 -> {
             Stage stage = (Stage) topAnchorPane.getScene().getWindow();
             stage.setX(e2.getScreenX() - e.getSceneX());
             stage.setY(e2.getScreenY() - e.getSceneY());
         }));
+
+        dateOfBirth.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                if (date.isBefore(LocalDate.now())) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #ffc0cb;");
+                }
+            }
+        });
     }
 
     public void xButtonAction() {
@@ -60,28 +77,28 @@ public class MainMenuController {
         stage.close();
     }
 
+    public void dropButtonAction() {
+        //minimize window
+        System.out.println("Drop Button Pressed");
+        Stage stage = (Stage) dropButton.getScene().getWindow();
+        stage.setIconified(true);
+    }
+
     public void submitButtonAction() {
         if (areToateCampurileCompletate()) {
-            System.out.println("Submit Button Pressed");
-            System.out.println("First Name: " + firstNameText.getText());
-            System.out.println("Last Name: " + lastNameText.getText());
-            System.out.println("Date of Birth: " + dateOfBirth.getValue());
-            System.out.println("Address: " + adress.getText());
-            System.out.println("Phone Number: " + phoneNumber.getText());
-            System.out.println("Email: " + email.getText());
             sceneManager.showAppointments();
         } else {
-            String errorMessage = "Please complete all red fields";
-            if(firstNameText.getText().isEmpty()) {
+            String errorMessage = "Please complete all required fields";
+            if (firstNameText.getText().isEmpty()) {
                 firstNameText.setStyle("-fx-border-color: red");
             }
-            if(lastNameText.getText().isEmpty()) {
+            if (lastNameText.getText().isEmpty()) {
                 lastNameText.setStyle("-fx-border-color: red");
             }
-            if(phoneNumber.getText().isEmpty()) {
+            if (phoneNumber.getText().isEmpty()) {
                 phoneNumber.setStyle("-fx-border-color: red");
             }
-            if(dateOfBirth.getValue() == null) {
+            if (dateOfBirth.getValue() == null) {
                 dateOfBirth.setStyle("-fx-border-color: red");
             }
 
@@ -95,5 +112,4 @@ public class MainMenuController {
                 && dateOfBirth.getValue() != null
                 && !phoneNumber.getText().isEmpty();
     }
-
 }

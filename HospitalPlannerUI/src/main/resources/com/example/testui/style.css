@@ -1,9 +1,52 @@
 #xButton{
-    -fx-background-color: #2B2B2B;
+    -fx-background-color: #a83234;
     -fx-text-fill: #ffffff;
 }
 
 #xButton:hover{
+    -fx-background-color: #000000;
+    -fx-text-fill: #ffffff;
+}
+
+#dropButton{
     -fx-background-color: #ffffff;
-    -fx-text-fill: #2B2B2B;
+    -fx-text-fill: #000000;
+}
+
+#dropButton:hover{
+    -fx-background-color: #000000;
+    -fx-text-fill: #ffffff;
+}
+
+#centerAnchorPane{
+    -fx-border-radius: 10;
+}
+
+#submitButton{
+    -fx-background-color: #639cd9;
+    -fx-text-fill: #ffffff;
+}
+
+#submitButton:hover{
+    -fx-background-color: #000000;
+    -fx-text-fill: #ffffff;
+}
+
+#backButton{
+    -fx-background-color: #639cd9;
+    -fx-text-fill: #ffffff;
+}
+
+#backButton:hover{
+    -fx-background-color: #000000;
+    -fx-text-fill: #ffffff;
+}
+
+#firstNameText, #lastNameText, #dateOfBirth, #adress, #email, #phoneNumber{
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 15;
+}
+
+#dateApp1, #dateApp2, #dateApp3, #startH1, #startH2, #startH3, #endH1, #endH2, #endH3, startM1, startM2, startM3, endM1, endM2, endM3{
+    -fx-font-family: "Century Gothic";
 }

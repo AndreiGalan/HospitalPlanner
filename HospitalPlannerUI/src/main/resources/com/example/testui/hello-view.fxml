@@ -33,7 +33,7 @@
                   <Image url="@Logo.png" />
                </image>
             </ImageView>
-            <Button layoutX="721.0" layoutY="32.0" mnemonicParsing="false" onAction="#xButtonAction" prefHeight="28.0" prefWidth="30.0" text="–" fx:id="xButton1">
+            <Button fx:id="dropButton" layoutX="721.0" layoutY="32.0" mnemonicParsing="false" onAction="#dropButtonAction" prefHeight="28.0" prefWidth="30.0" text="–">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -45,7 +45,7 @@
          <children>
             <BorderPane layoutX="14.0" layoutY="142.0">
                <top>
-                  <AnchorPane prefHeight="357.0" prefWidth="798.0" style="-fx-background-color: #639cd9;" BorderPane.alignment="CENTER">
+                  <AnchorPane prefHeight="357.0" prefWidth="798.0" style="-fx-background-color: #639cd9; -fx-border-radius: 100;" BorderPane.alignment="CENTER">
                      <children>
                         <Line endX="2.0" endY="266.0" layoutX="397.0" layoutY="116.0" startX="2.0" startY="-112.0" stroke="#342056" strokeLineCap="ROUND" strokeWidth="5.0">
                            <fill>
@@ -141,7 +141,7 @@
             </Text>
             <Button fx:id="submitButton" layoutX="379.0" layoutY="540.0" mnemonicParsing="false" onAction="#submitButtonAction" text="Submit">
                <font>
-                  <Font size="15.0" />
+                  <Font name="Century Gothic Bold" size="15.0" />
                </font>
             </Button>
          </children>

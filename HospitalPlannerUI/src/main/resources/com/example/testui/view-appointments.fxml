@@ -30,7 +30,7 @@
                         <Image url="@Logo.png" />
                     </image>
                 </ImageView>
-                <Button layoutX="721.0" layoutY="32.0" mnemonicParsing="false" onAction="#xButtonAction" prefHeight="28.0" prefWidth="30.0" text="–" fx:id="xButton1">
+                <Button fx:id="dropButton" layoutX="721.0" layoutY="32.0" mnemonicParsing="false" onAction="#dropButtonAction" prefHeight="28.0" prefWidth="30.0" text="–">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
@@ -44,7 +44,7 @@
 
                 <Button fx:id="backButton" layoutX="328.0" layoutY="539.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back">
                     <font>
-                        <Font size="15.0" />
+                        <Font name="System Bold" size="15.0" />
                     </font>
                 </Button>
                 <ListView fx:id="appointmentsListView" layoutX="44.0" layoutY="77.0" prefHeight="442.0" prefWidth="335.0" style="-fx-background-color: #639cd9;" />
@@ -66,10 +66,10 @@
                         <Font name="Century Gothic Bold" size="14.0" />
                      </font>
                   </Text>
-                  <Spinner fx:id="startH1" editable="true" layoutX="17.0" layoutY="110.0" prefHeight="25.0" prefWidth="64.0" />
-                  <Spinner fx:id="startM1" editable="true" layoutX="101.0" layoutY="110.0" prefHeight="25.0" prefWidth="64.0" />
-                  <DatePicker fx:id="dateApp1" layoutX="92.0" layoutY="66.0" prefHeight="25.0" prefWidth="177.0" />
-                  <Spinner fx:id="endH1" editable="true" layoutX="202.0" layoutY="110.0" prefHeight="25.0" prefWidth="64.0" />
+                  <Spinner fx:id="startH1" editable="true" layoutX="17.0" layoutY="110.0" onDragDetected="#startH1Action" onMousePressed="#startH1Action" prefHeight="25.0" prefWidth="64.0" />
+                  <Spinner fx:id="startM1" editable="true" layoutX="101.0" layoutY="110.0" onMousePressed="#startM1Action" prefHeight="25.0" prefWidth="64.0" />
+                  <DatePicker fx:id="dateApp1" layoutX="92.0" layoutY="66.0" onAction="#dateApp1Action" prefHeight="25.0" prefWidth="177.0" />
+                  <Spinner fx:id="endH1" editable="true" layoutX="202.0" layoutY="110.0" onMousePressed="#endH1Action" prefHeight="25.0" prefWidth="64.0" />
                   <Spinner fx:id="endM1" editable="true" layoutX="281.0" layoutY="110.0" prefHeight="25.0" prefWidth="64.0" />
                   <Text layoutX="89.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":" wrappingWidth="4.89453125">
                      <font>
@@ -86,9 +86,9 @@
                         <Font name="Century Gothic Bold" size="17.0" />
                      </font>
                   </Text>
-                  <Spinner fx:id="startH3" editable="true" layoutX="17.0" layoutY="302.0" prefHeight="25.0" prefWidth="64.0" />
-                  <Spinner fx:id="startM3" editable="true" layoutX="101.0" layoutY="302.0" prefHeight="25.0" prefWidth="64.0" />
-                  <Spinner fx:id="endH3" editable="true" layoutX="197.0" layoutY="302.0" prefHeight="25.0" prefWidth="64.0" />
+                  <Spinner fx:id="startH3" editable="true" layoutX="17.0" layoutY="302.0" onMousePressed="#startH3Action" prefHeight="25.0" prefWidth="64.0" />
+                  <Spinner fx:id="startM3" editable="true" layoutX="101.0" layoutY="302.0" onMousePressed="#startM3Action" prefHeight="25.0" prefWidth="64.0" />
+                  <Spinner fx:id="endH3" editable="true" layoutX="197.0" layoutY="302.0" onMousePressed="#endH3Action" prefHeight="25.0" prefWidth="64.0" />
                   <Spinner fx:id="endM3" editable="true" layoutX="281.0" layoutY="302.0" prefHeight="25.0" prefWidth="64.0" />
                   <Text layoutX="91.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":" wrappingWidth="4.89453125">
                      <font>
@@ -105,11 +105,11 @@
                         <Font name="Century Gothic Bold" size="17.0" />
                      </font>
                   </Text>
-                  <DatePicker fx:id="dateApp3" layoutX="95.0" layoutY="254.0" prefHeight="25.0" prefWidth="177.0" />
-                  <Spinner fx:id="startH2" editable="true" layoutX="19.0" layoutY="207.0" prefHeight="25.0" prefWidth="64.0" />
-                  <Spinner fx:id="startM2" editable="true" layoutX="103.0" layoutY="207.0" prefHeight="25.0" prefWidth="64.0" />
-                  <DatePicker fx:id="dateApp2" layoutX="94.0" layoutY="163.0" prefHeight="25.0" prefWidth="177.0" />
-                  <Spinner fx:id="endH2" editable="true" layoutX="204.0" layoutY="207.0" prefHeight="25.0" prefWidth="64.0" />
+                  <DatePicker fx:id="dateApp3" layoutX="95.0" layoutY="254.0" onAction="#dateApp3Action" prefHeight="25.0" prefWidth="177.0" />
+                  <Spinner fx:id="startH2" editable="true" layoutX="19.0" layoutY="207.0" onMousePressed="#startH2Action" prefHeight="25.0" prefWidth="64.0" />
+                  <Spinner fx:id="startM2" editable="true" layoutX="103.0" layoutY="207.0" onMousePressed="#startM2Action" prefHeight="25.0" prefWidth="64.0" />
+                  <DatePicker fx:id="dateApp2" layoutX="94.0" layoutY="163.0" onAction="#dateApp2Action" prefHeight="25.0" prefWidth="177.0" />
+                  <Spinner fx:id="endH2" editable="true" layoutX="204.0" layoutY="207.0" onMousePressed="#endH2Action" prefHeight="25.0" prefWidth="64.0" />
                   <Spinner fx:id="endM2" editable="true" layoutX="283.0" layoutY="207.0" prefHeight="25.0" prefWidth="64.0" />
                   <Text layoutX="89.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":" wrappingWidth="4.89453125">
                      <font>
@@ -127,9 +127,9 @@
                      </font>
                   </Text>
                </children></AnchorPane>
-            <Button fx:id="backButton1" layoutX="413.0" layoutY="539.0" mnemonicParsing="false" onAction="#backButtonAction" text="Submit">
+            <Button fx:id="submitButton" layoutX="413.0" layoutY="539.0" mnemonicParsing="false" onAction="#submitButtonAction" text="Submit">
                <font>
-                  <Font size="15.0" />
+                  <Font name="Century Gothic Bold" size="15.0" />
                </font>
             </Button>
             </children>
