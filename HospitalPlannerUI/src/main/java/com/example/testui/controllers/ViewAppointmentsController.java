@@ -251,10 +251,11 @@
 
         public void startH1Action() {
             LocalTime currentTime = LocalTime.now();
-            if (endH1.getValue() < startH1.getValue()) {
-                SpinnerValueFactory<Integer> valueFactoryHour = new SpinnerValueFactory.IntegerSpinnerValueFactory(startH1.getValue(), 23, 0);
-                endH1.setValueFactory(valueFactoryHour);
-            }
+            SpinnerValueFactory<Integer> valueFactoryHour = new SpinnerValueFactory.IntegerSpinnerValueFactory(startH1.getValue(), 23, 0);
+            endH1.setValueFactory(valueFactoryHour);
+
+            if(startH1.equals(endH1))
+                endM1.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(startM1.getValue(), 23, 0));
 
             if (dateApp1.getValue() != null) {
                 System.out.println(dateApp1.getValue());
@@ -271,10 +272,11 @@
 
         public void startH2Action() {
             LocalTime currentTime = LocalTime.now();
-            if (endH2.getValue() < startH2.getValue()) {
-                SpinnerValueFactory<Integer> valueFactoryHour = new SpinnerValueFactory.IntegerSpinnerValueFactory(startH2.getValue(), 23, 0);
-                endH2.setValueFactory(valueFactoryHour);
-            }
+            SpinnerValueFactory<Integer> valueFactoryHour = new SpinnerValueFactory.IntegerSpinnerValueFactory(startH2.getValue(), 23, 0);
+            endH2.setValueFactory(valueFactoryHour);
+
+            if(startH2.equals(endH2))
+                endM2.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(startM2.getValue(), 23, 0));
 
             if (dateApp2.getValue() != null)
                 if (dateApp2.getValue().isEqual(LocalDate.now())) {
@@ -289,10 +291,11 @@
 
         public void startH3Action() {
             LocalTime currentTime = LocalTime.now();
-            if (endH3.getValue() < startH3.getValue()) {
-                SpinnerValueFactory<Integer> valueFactoryHour = new SpinnerValueFactory.IntegerSpinnerValueFactory(startH3.getValue(), 23, 0);
-                endH3.setValueFactory(valueFactoryHour);
-            }
+            SpinnerValueFactory<Integer> valueFactoryHour = new SpinnerValueFactory.IntegerSpinnerValueFactory(startH3.getValue(), 23, 0);
+            endH3.setValueFactory(valueFactoryHour);
+
+            if(startH3.equals(endH3))
+                endM3.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(startM3.getValue(), 23, 0));
 
             if (dateApp3.getValue() != null)
                 if (dateApp3.getValue().isEqual(LocalDate.now())) {
@@ -339,11 +342,16 @@
         }
 
         public void startM1Action() {
+            System.out.println("startM1Action");
             if (endH1.getValue().equals(startH1.getValue())) {
                 if (endM1.getValue() < startM1.getValue()) {
                     SpinnerValueFactory<Integer> valueFactoryMinutes1 = new SpinnerValueFactory.IntegerSpinnerValueFactory(startM1.getValue(), 59, 0);
                     endM1.setValueFactory(valueFactoryMinutes1);
                 }
+            }
+            else {
+                SpinnerValueFactory<Integer> valueFactoryMinutes1 = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 0);
+                endM1.setValueFactory(valueFactoryMinutes1);
             }
         }
 
@@ -354,6 +362,10 @@
                     endM2.setValueFactory(valueFactoryMinutes1);
                 }
             }
+            else {
+                SpinnerValueFactory<Integer> valueFactoryMinutes1 = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 0);
+                endM2.setValueFactory(valueFactoryMinutes1);
+            }
         }
 
         public void startM3Action() {
@@ -362,6 +374,10 @@
                     SpinnerValueFactory<Integer> valueFactoryMinutes1 = new SpinnerValueFactory.IntegerSpinnerValueFactory(startM3.getValue(), 59, 0);
                     endM3.setValueFactory(valueFactoryMinutes1);
                 }
+            }
+            else {
+                SpinnerValueFactory<Integer> valueFactoryMinutes1 = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 0);
+                endM2.setValueFactory(valueFactoryMinutes1);
             }
         }
 

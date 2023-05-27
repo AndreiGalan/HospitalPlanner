@@ -9,6 +9,7 @@ module com.example.testui {
     requires com.fasterxml.jackson.annotation;
     requires com.fasterxml.jackson.datatype.jsr310;
 
+
     opens com.example.testui to javafx.fxml;
     opens com.example.testui.controllers to javafx.fxml;
     exports com.example.testui;
