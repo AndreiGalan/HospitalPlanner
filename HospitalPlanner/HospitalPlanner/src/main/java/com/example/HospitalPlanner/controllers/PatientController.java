@@ -23,6 +23,21 @@ public class PatientController {
     public List<PatientEntity> findAll() {
         return patientService.findAll();
     }
+
+    @GetMapping("/{id}")
+    public PatientEntity findById(@PathVariable("id") Long id) {
+        return patientService.findById(id);
+    }
+
+    @PostMapping("/create")
+    public PatientEntity create(@RequestBody PatientEntity patientEntity) {
+        return patientService.create(patientEntity);
+    }
+
+    @GetMapping("/find")
+    public PatientEntity findPatient(@RequestBody PatientEntity patientEntity) {
+        return patientService.findPatient(patientEntity.getLastName(), patientEntity.getFirstName(), patientEntity.getDateOfBirth());
+    }
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         patientService.delete(id);

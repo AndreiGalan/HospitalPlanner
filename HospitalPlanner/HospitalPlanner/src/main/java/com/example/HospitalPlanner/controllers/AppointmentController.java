@@ -3,6 +3,7 @@ package com.example.HospitalPlanner.controllers;
 import com.example.HospitalPlanner.dto.AppointmentCreationDto;
 import com.example.HospitalPlanner.entity.Appointment;
 import com.example.HospitalPlanner.service.AppointmentService;
+import com.example.HospitalPlanner.util.TimeInterval;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,9 +46,9 @@ public class AppointmentController {
     }
 
     @PostMapping(value = "/create", produces = "application/json")
-    public void create(@RequestBody AppointmentCreationDto appointmentCreationDto) {
+    public TimeInterval create(@RequestBody AppointmentCreationDto appointmentCreationDto) {
         System.out.println("create");
-        appointmentService.create(appointmentCreationDto);
+        return appointmentService.create(appointmentCreationDto);
     }
 
     @DeleteMapping("/{id}")

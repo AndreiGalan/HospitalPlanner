@@ -1,8 +1,7 @@
 package com.example.testui;
 
-import com.example.testui.Controllers.MainMenuController;
-import com.example.testui.Controllers.ViewAppointmentsController;
-import javafx.application.Platform;
+import com.example.testui.controllers.MainMenuController;
+import com.example.testui.controllers.ViewAppointmentsController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

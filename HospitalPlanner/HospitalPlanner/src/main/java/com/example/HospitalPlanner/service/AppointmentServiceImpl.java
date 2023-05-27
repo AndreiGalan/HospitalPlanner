@@ -45,13 +45,13 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public void create(AppointmentCreationDto appointmentCreationDto) {
+    public TimeInterval create(AppointmentCreationDto appointmentCreationDto) {
 
         AppointmentType appointmentType = AppointmentType.getType(appointmentCreationDto.getType());
 
         if (appointmentType == null) {
             // Handle invalid appointment type
-            return;
+            return null;
         }
 
         Integer durationOfAppointment = appointmentType.getValue();
@@ -62,7 +62,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         if (doctor == null || patient == null) {
             // Handle invalid doctor or patient
-            return;
+            return null;
         }
         // TODO - THROW CUSTOM EXCEPTION
 
@@ -96,7 +96,8 @@ public class AppointmentServiceImpl implements AppointmentService {
                         .appointmentType(appointmentCreationDto.getType())
                         .build();
                 appointmentRepository.save(appointment);
-                return;
+
+                return freeInterval;
             }
         }
 
