@@ -75,13 +75,12 @@ public class Appointment {
 
     @Override
     public String toString() {
-        return "Appointment{" +
-                "id=" + id +
-                ", doctorEntity=" + doctorEntity +
-                ", patientEntity=" + patientEntity +
-                ", appointmentDate=" + appointmentDate +
-                ", appointmentTime=" + appointmentTime +
-                ", appointmentType='" + appointmentType + '\'' +
-                '}';
+        return
+                "Doctor: " + doctorEntity.getFirstName() + " " + doctorEntity.getLastName() +
+                ", appointmentDate: " + appointmentDate +
+                ", appointmentTime: " + appointmentTime +
+                ", appointmentType: '" + appointmentType + '\'';
     }
+
+
 }

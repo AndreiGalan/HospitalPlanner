@@ -406,36 +406,49 @@
 
         public void backButtonAction() {
             System.out.println("Back Button Pressed");
-            sceneManager.showMainMenu();
+            sceneManager.showPatientData();
         }
 
         public void submitButtonAction() {
             if (areToateCampurileCompletate()) {
+                try{
+                    dateApp1.setStyle("-fx-border-color: none; -fx-border-width: none;");
+                    appointmentTypeChoiceBox.setStyle("-fx-border-color: none; -fx-border-width: none;");
+                    appointmentsListView.setStyle("-fx-border-color: none; -fx-border-width: none;");
+                    setAppointmentsToPost();
+                    TimeInterval timeInterval = appointmentFetchController.createAppointment(this.appointment);
 
-                setAppointmentsToPost();
-                TimeInterval timeInterval = appointmentFetchController.createAppointment(this.appointment);
-
-                sceneManager.showPopUp("Appointment registration is completed successfully!" + "\n" +
-                        "Date" +timeInterval.getDate() + "\n" +
-                        "Time: " + timeInterval.getStart() + " - " + timeInterval.getEnd()
-                );
+                    sceneManager.showPopUp("Appointment registration is completed successfully!" + "\n" +
+                            "Date: " +timeInterval.getDate() + "\n" +
+                            "Time: " + timeInterval.getStart() + " - " + timeInterval.getEnd()
+                    );
+                }
+                catch (Exception e){
+                    sceneManager.showPopUp(e.getMessage());
+                }
 
             } else {
                 String errorMessage = "Please complete all required fields";
                 if (dateApp1.getValue() == null) {
                     errorMessage += "\n- Date";
-                    dateApp1.setStyle("-fx-border-color: red");
+                    dateApp1.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
                 }
+                else
+                    dateApp1.setStyle("-fx-border-color: none; -fx-border-width: none;");
 
                 if (appointmentsListView.getSelectionModel().getSelectedItem() == null) {
                     errorMessage += "\n- Doctor";
-                    appointmentsListView.setStyle("-fx-border-color: red");
+                    appointmentsListView.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
                 }
+                else
+                    appointmentsListView.setStyle("-fx-border-color: none; -fx-border-width: none;");
 
                 if (appointmentTypeChoiceBox.getValue() == null) {
                     errorMessage += "\n- Appointment Type";
-                    appointmentTypeChoiceBox.setStyle("-fx-border-color: red");
+                    appointmentTypeChoiceBox.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
                 }
+                else
+                    appointmentTypeChoiceBox.setStyle("-fx-border-color: none; -fx-border-width: none;");
 
                 sceneManager.showPopUp(errorMessage);
             }

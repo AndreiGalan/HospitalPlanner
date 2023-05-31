@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="688.0" prefWidth="825.0" style="-fx-background-color: #eda489;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.testui.controllers.MainMenuController">
+    <top>
+        <AnchorPane fx:id="topAnchorPane" prefHeight="93.0" prefWidth="846.0" style="-fx-background-color: #639cd9;" BorderPane.alignment="CENTER">
+            <children>
+                <Button layoutX="765.0" layoutY="32.0" mnemonicParsing="false" onAction="#xButtonAction" prefHeight="30.0" prefWidth="20.0" text="X" fx:id="xButton">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font></Button>
+                <Text fill="#3058d0" layoutX="112.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hospital planner">
+                    <font>
+                        <Font name="Century Gothic Bold" size="27.0" />
+                    </font>
+                </Text>
+                <ImageView fitHeight="71.0" fitWidth="83.0" layoutX="24.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@Logo.png" />
+                    </image>
+                </ImageView>
+                <Button fx:id="dropButton" layoutX="721.0" layoutY="32.0" mnemonicParsing="false" onAction="#dropButtonAction" prefHeight="28.0" prefWidth="30.0" text="–">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Button>
+            </children></AnchorPane>
+    </top>
+   <right>
+        <AnchorPane fx:id="centerAnchorPane" prefHeight="724.0" prefWidth="825.0" style="-fx-background-color: #c7eeff;" BorderPane.alignment="CENTER">
+            <children>
+                <BorderPane layoutX="14.0" layoutY="142.0" />
+            <ImageView fitHeight="419.0" fitWidth="593.0" layoutX="130.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@HospitalPlanner.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="152.0" fitWidth="198.0" layoutX="314.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@MenuLogo.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="viewYourAppointments" layoutX="14.0" layoutY="279.0" mnemonicParsing="false" onAction="#viewYourAppointmentsAction" prefHeight="37.0" prefWidth="196.0" text="View your Appointments">
+               <font>
+                  <Font name="Century Gothic Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="viewDoctorTimetable" layoutX="634.0" layoutY="279.0" mnemonicParsing="false" onAction="#viewDoctorTimetableAction" prefHeight="37.0" prefWidth="177.0" text="View Doctor Timetable">
+               <font>
+                  <Font name="Century Gothic Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="makeAppointment" layoutX="338.0" layoutY="534.0" mnemonicParsing="false" onAction="#makeAppointmentAction" prefHeight="37.0" prefWidth="177.0" text="Make a Appointment">
+               <font>
+                  <Font name="Century Gothic Bold" size="14.0" />
+               </font>
+            </Button>
+            </children>
+        </AnchorPane>
+   </right>
+</BorderPane>

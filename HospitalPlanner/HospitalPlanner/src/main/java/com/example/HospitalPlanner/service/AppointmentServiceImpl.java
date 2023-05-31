@@ -206,6 +206,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public List<Appointment> findByDoctorId(Long Id) {
         List<Appointment> appointments = Optional.ofNullable( appointmentRepository.findByDoctorId(Id)).orElse(new ArrayList<>());
+        System.out.println(appointments);
         return appointments;
     }
 
