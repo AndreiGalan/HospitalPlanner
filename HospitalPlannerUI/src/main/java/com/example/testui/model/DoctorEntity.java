@@ -75,9 +75,8 @@ public class DoctorEntity {
     public String toString() {
         return firstName + ' ' +
                 lastName + ' ' +
-                ", specialization='" + specialization + '\'' +
-                ", programStart=" + programStart +
-                ", programEnd=" + programEnd +
-                '}';
+                ", specialization: '" + specialization + '\'' +
+                ", his/her program starts at: " + programStart +
+                ", ends at: " + programEnd ;
     }
 }

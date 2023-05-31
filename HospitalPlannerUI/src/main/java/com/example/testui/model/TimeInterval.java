@@ -56,11 +56,9 @@ public class TimeInterval {
 
     @Override
     public String toString() {
-        return "TimeInterval{" +
-                "date=" + date +
-                ", start=" + start +
-                ", end=" + end +
-                ", type='" + type + '\'' +
-                '}' + "\n";
+        return "Date: " + date +
+                ", start at: " + start +
+                ", end at: " + end +
+                ", type: " + type  + "\n";
     }
 }

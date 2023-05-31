@@ -9,4 +9,5 @@ import java.util.List;
 public interface DoctorService {
     List<DoctorEntity> findAll();
     void delete(Long id);
+    List<String> getAllSpecializations();
 }

@@ -12,6 +12,7 @@
     import javafx.fxml.FXML;
     import javafx.scene.control.*;
     import javafx.scene.layout.AnchorPane;
+    import javafx.scene.layout.Region;
     import javafx.stage.Stage;
 
     import java.nio.file.attribute.UserPrincipal;
@@ -75,6 +76,9 @@
         @FXML
         private Spinner<Integer> endM3;
 
+        @FXML
+        private ChoiceBox<String> filterChoiceBox;
+
         private String[] appointmentTypes = {"Consultation", "Surgery", "Therapy", "Vaccination"};
 
         private ObservableList<DoctorEntity> doctors = FXCollections.observableArrayList();
@@ -97,7 +101,10 @@
                 stage.setY(e2.getScreenY() - e.getSceneY());
             }));
 
+
             appointmentTypeChoiceBox.getItems().addAll(appointmentTypes);
+
+            filterChoiceBox.getItems().addAll(doctorFetchController.getAllSpecializations());
 
             dateApp1.setDayCellFactory(picker -> new DateCell() {
                 @Override
@@ -134,6 +141,8 @@
 
             initializeSpinners();
             initializeDoctors();
+
+
 
         }
 
@@ -494,5 +503,11 @@
             timeInterval.setStart(start);
             timeInterval.setEnd(end);
             return timeInterval;
+        }
+
+        public void filterChoiceBoxAction() {
+            appointmentsListView.getItems().clear();
+            doctors.addAll(doctorFetchController.getDoctorsBySpecialization(filterChoiceBox.getValue()));
+            appointmentsListView.setItems(doctors);
         }
     }

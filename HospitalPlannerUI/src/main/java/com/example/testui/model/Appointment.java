@@ -77,9 +77,9 @@ public class Appointment {
     public String toString() {
         return
                 "Doctor: " + doctorEntity.getFirstName() + " " + doctorEntity.getLastName() +
-                ", appointmentDate: " + appointmentDate +
-                ", appointmentTime: " + appointmentTime +
-                ", appointmentType: '" + appointmentType + '\'';
+                ", appointment date: " + appointmentDate +
+                ", appointment start: " + appointmentTime +
+                ", appointment type: '" + appointmentType + '\'';
     }
 
 

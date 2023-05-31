@@ -115,3 +115,22 @@
     -fx-font-family: "Century Gothic";
     -fx-font-size: 13;
 }
+
+#filterChoiceBox .context-menu {
+    -fx-pref-height: 220; /* Your width for the context menu background shown */
+}
+
+
+
+.list-view .list-cell:odd {
+    -fx-background-color: #c7eeff;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #639cd9;
+    -fx-text-fill: #ffffff;
+}
+
+.list-view.list-cell:even {
+    -fx-background-color: #ffffff;
+}
