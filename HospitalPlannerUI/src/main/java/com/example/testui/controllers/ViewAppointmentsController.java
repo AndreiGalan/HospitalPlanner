@@ -12,6 +12,7 @@
     import javafx.fxml.FXML;
     import javafx.scene.control.*;
     import javafx.scene.layout.AnchorPane;
+    import javafx.scene.layout.Region;
     import javafx.stage.Stage;
 
     import java.nio.file.attribute.UserPrincipal;
@@ -75,6 +76,9 @@
         @FXML
         private Spinner<Integer> endM3;
 
+        @FXML
+        private ChoiceBox<String> filterChoiceBox;
+
         private String[] appointmentTypes = {"Consultation", "Surgery", "Therapy", "Vaccination"};
 
         private ObservableList<DoctorEntity> doctors = FXCollections.observableArrayList();
@@ -97,7 +101,10 @@
                 stage.setY(e2.getScreenY() - e.getSceneY());
             }));
 
+
             appointmentTypeChoiceBox.getItems().addAll(appointmentTypes);
+
+            filterChoiceBox.getItems().addAll(doctorFetchController.getAllSpecializations());
 
             dateApp1.setDayCellFactory(picker -> new DateCell() {
                 @Override
@@ -134,6 +141,8 @@
 
             initializeSpinners();
             initializeDoctors();
+
+
 
         }
 
@@ -251,10 +260,11 @@
 
         public void startH1Action() {
             LocalTime currentTime = LocalTime.now();
-            if (endH1.getValue() < startH1.getValue()) {
-                SpinnerValueFactory<Integer> valueFactoryHour = new SpinnerValueFactory.IntegerSpinnerValueFactory(startH1.getValue(), 23, 0);
-                endH1.setValueFactory(valueFactoryHour);
-            }
+            SpinnerValueFactory<Integer> valueFactoryHour = new SpinnerValueFactory.IntegerSpinnerValueFactory(startH1.getValue(), 23, 0);
+            endH1.setValueFactory(valueFactoryHour);
+
+            if(startH1.equals(endH1))
+                endM1.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(startM1.getValue(), 23, 0));
 
             if (dateApp1.getValue() != null) {
                 System.out.println(dateApp1.getValue());
@@ -271,10 +281,11 @@
 
         public void startH2Action() {
             LocalTime currentTime = LocalTime.now();
-            if (endH2.getValue() < startH2.getValue()) {
-                SpinnerValueFactory<Integer> valueFactoryHour = new SpinnerValueFactory.IntegerSpinnerValueFactory(startH2.getValue(), 23, 0);
-                endH2.setValueFactory(valueFactoryHour);
-            }
+            SpinnerValueFactory<Integer> valueFactoryHour = new SpinnerValueFactory.IntegerSpinnerValueFactory(startH2.getValue(), 23, 0);
+            endH2.setValueFactory(valueFactoryHour);
+
+            if(startH2.equals(endH2))
+                endM2.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(startM2.getValue(), 23, 0));
 
             if (dateApp2.getValue() != null)
                 if (dateApp2.getValue().isEqual(LocalDate.now())) {
@@ -289,10 +300,11 @@
 
         public void startH3Action() {
             LocalTime currentTime = LocalTime.now();
-            if (endH3.getValue() < startH3.getValue()) {
-                SpinnerValueFactory<Integer> valueFactoryHour = new SpinnerValueFactory.IntegerSpinnerValueFactory(startH3.getValue(), 23, 0);
-                endH3.setValueFactory(valueFactoryHour);
-            }
+            SpinnerValueFactory<Integer> valueFactoryHour = new SpinnerValueFactory.IntegerSpinnerValueFactory(startH3.getValue(), 23, 0);
+            endH3.setValueFactory(valueFactoryHour);
+
+            if(startH3.equals(endH3))
+                endM3.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(startM3.getValue(), 23, 0));
 
             if (dateApp3.getValue() != null)
                 if (dateApp3.getValue().isEqual(LocalDate.now())) {
@@ -339,11 +351,16 @@
         }
 
         public void startM1Action() {
+            System.out.println("startM1Action");
             if (endH1.getValue().equals(startH1.getValue())) {
                 if (endM1.getValue() < startM1.getValue()) {
                     SpinnerValueFactory<Integer> valueFactoryMinutes1 = new SpinnerValueFactory.IntegerSpinnerValueFactory(startM1.getValue(), 59, 0);
                     endM1.setValueFactory(valueFactoryMinutes1);
                 }
+            }
+            else {
+                SpinnerValueFactory<Integer> valueFactoryMinutes1 = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 0);
+                endM1.setValueFactory(valueFactoryMinutes1);
             }
         }
 
@@ -354,6 +371,10 @@
                     endM2.setValueFactory(valueFactoryMinutes1);
                 }
             }
+            else {
+                SpinnerValueFactory<Integer> valueFactoryMinutes1 = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 0);
+                endM2.setValueFactory(valueFactoryMinutes1);
+            }
         }
 
         public void startM3Action() {
@@ -362,6 +383,10 @@
                     SpinnerValueFactory<Integer> valueFactoryMinutes1 = new SpinnerValueFactory.IntegerSpinnerValueFactory(startM3.getValue(), 59, 0);
                     endM3.setValueFactory(valueFactoryMinutes1);
                 }
+            }
+            else {
+                SpinnerValueFactory<Integer> valueFactoryMinutes1 = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 0);
+                endM2.setValueFactory(valueFactoryMinutes1);
             }
         }
 
@@ -390,36 +415,49 @@
 
         public void backButtonAction() {
             System.out.println("Back Button Pressed");
-            sceneManager.showMainMenu();
+            sceneManager.showPatientData();
         }
 
         public void submitButtonAction() {
             if (areToateCampurileCompletate()) {
+                try{
+                    dateApp1.setStyle("-fx-border-color: none; -fx-border-width: none;");
+                    appointmentTypeChoiceBox.setStyle("-fx-border-color: none; -fx-border-width: none;");
+                    appointmentsListView.setStyle("-fx-border-color: none; -fx-border-width: none;");
+                    setAppointmentsToPost();
+                    TimeInterval timeInterval = appointmentFetchController.createAppointment(this.appointment);
 
-                setAppointmentsToPost();
-                TimeInterval timeInterval = appointmentFetchController.createAppointment(this.appointment);
-
-                sceneManager.showPopUp("Appointment registration is completed successfully!" + "\n" +
-                        "Date" +timeInterval.getDate() + "\n" +
-                        "Time: " + timeInterval.getStart() + " - " + timeInterval.getEnd()
-                );
+                    sceneManager.showPopUp("Appointment registration is completed successfully!" + "\n" +
+                            "Date: " +timeInterval.getDate() + "\n" +
+                            "Time: " + timeInterval.getStart() + " - " + timeInterval.getEnd()
+                    );
+                }
+                catch (Exception e){
+                    sceneManager.showPopUp(e.getMessage());
+                }
 
             } else {
                 String errorMessage = "Please complete all required fields";
                 if (dateApp1.getValue() == null) {
                     errorMessage += "\n- Date";
-                    dateApp1.setStyle("-fx-border-color: red");
+                    dateApp1.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
                 }
+                else
+                    dateApp1.setStyle("-fx-border-color: none; -fx-border-width: none;");
 
                 if (appointmentsListView.getSelectionModel().getSelectedItem() == null) {
                     errorMessage += "\n- Doctor";
-                    appointmentsListView.setStyle("-fx-border-color: red");
+                    appointmentsListView.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
                 }
+                else
+                    appointmentsListView.setStyle("-fx-border-color: none; -fx-border-width: none;");
 
                 if (appointmentTypeChoiceBox.getValue() == null) {
                     errorMessage += "\n- Appointment Type";
-                    appointmentTypeChoiceBox.setStyle("-fx-border-color: red");
+                    appointmentTypeChoiceBox.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
                 }
+                else
+                    appointmentTypeChoiceBox.setStyle("-fx-border-color: none; -fx-border-width: none;");
 
                 sceneManager.showPopUp(errorMessage);
             }
@@ -465,5 +503,11 @@
             timeInterval.setStart(start);
             timeInterval.setEnd(end);
             return timeInterval;
+        }
+
+        public void filterChoiceBoxAction() {
+            appointmentsListView.getItems().clear();
+            doctors.addAll(doctorFetchController.getDoctorsBySpecialization(filterChoiceBox.getValue()));
+            appointmentsListView.setItems(doctors);
         }
     }

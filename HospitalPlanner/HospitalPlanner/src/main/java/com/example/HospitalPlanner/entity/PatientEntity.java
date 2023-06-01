@@ -17,8 +17,8 @@ import java.time.LocalDate;
 public class PatientEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
     @Column(name = "first_name")
     private String firstName;

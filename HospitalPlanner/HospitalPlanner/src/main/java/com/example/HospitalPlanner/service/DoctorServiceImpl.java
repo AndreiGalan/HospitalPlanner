@@ -26,4 +26,9 @@ public class DoctorServiceImpl implements DoctorService {
     public void delete(Long id) {
         doctorRepository.deleteById(id);
     }
+
+    @Override
+    public List<String> getAllSpecializations() {
+        return doctorRepository.getAllSpecializations();
+    }
 }

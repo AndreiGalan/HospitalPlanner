@@ -46,15 +46,15 @@ public class PatientServiceImpl implements PatientService {
             patientRepository.save(patientEntity);
             patient = patientRepository.findPatient(patientEntity.getLastName(), patientEntity.getFirstName(), patientEntity.getDateOfBirth());
         }
-        //
+        // TODO: complete this
         patientEntity.setId(patient.getId());
         patientRepository.save(patientEntity);
         return patient;
     }
 
     public PatientEntity findPatient(String lastName, String firstName, LocalDate birthDate) {
-        PatientEntity patientEntity = Optional.ofNullable(patientRepository.findPatient(lastName, firstName, birthDate)).orElse(null);
-        return patientEntity;
+
+        return patientRepository.findPatient(lastName, firstName, birthDate);
     }
 
 }

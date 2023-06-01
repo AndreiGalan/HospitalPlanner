@@ -38,4 +38,60 @@ public class DoctorFetchController {
         });
         return completableFuture.join();
     }
+
+    public List<String> getAllSpecializations(){
+        CompletableFuture<List<String>> completableFuture =  CompletableFuture.supplyAsync(() -> {
+            try {
+                HttpResponse<String> response = Unirest.get("http://localhost:8199/doctors/specializations")
+                        .header("accept", "application/json")
+                        .asString();
+
+                if (response.getStatus() == 200) {
+                    String responseBody = response.getBody();
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    objectMapper.registerModule(new JavaTimeModule());
+                    //System.out.println(responseBody);
+                    List<String> specializations = objectMapper.readValue(responseBody, new TypeReference<List<String>>() {
+                    });
+
+                    return specializations;
+                } else {
+                    throw new IOException("Request failed with response code: " + response.getStatus());
+                }
+            } catch (IOException | UnirestException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        return completableFuture.join();
+    }
+
+    public List<DoctorEntity> getDoctorsBySpecialization(String specialization) {
+        CompletableFuture<List<DoctorEntity>> completableFuture =  CompletableFuture.supplyAsync(() -> {
+            try {
+                HttpResponse<String> response = Unirest.get("http://localhost:8199/doctors")
+                        .header("accept", "application/json")
+                        .asString();
+
+                if (response.getStatus() == 200) {
+                    String responseBody = response.getBody();
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    objectMapper.registerModule(new JavaTimeModule());
+                    //System.out.println(responseBody);
+                    List<DoctorEntity> doctorEntityList = objectMapper.readValue(responseBody, new TypeReference<List<DoctorEntity>>() {
+                    });
+
+                    if(specialization != null && !specialization.isEmpty()){
+                        doctorEntityList.removeIf(doctorEntity -> !doctorEntity.getSpecialization().equals(specialization));
+                    }
+
+                    return doctorEntityList;
+                } else {
+                    throw new IOException("Request failed with response code: " + response.getStatus());
+                }
+            } catch (IOException | UnirestException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        return completableFuture.join();
+    }
 }

@@ -40,6 +40,16 @@
    <right>
         <AnchorPane prefHeight="641.0" prefWidth="825.0" style="-fx-background-color: #c7eeff;" BorderPane.alignment="CENTER">
             <children>
+            <AnchorPane layoutX="31.0" layoutY="67.0" prefHeight="453.0" prefWidth="361.0" style="-fx-background-color: #639cd9;">
+               <children>
+                  <Text layoutX="14.0" layoutY="434.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter by specialization" wrappingWidth="185.89453125">
+                     <font>
+                        <Font name="Century Gothic Bold" size="17.0" />
+                     </font>
+                  </Text>
+                   <ChoiceBox fx:id="filterChoiceBox" layoutX="200.0" layoutY="416.0" onAction="#filterChoiceBoxAction" prefWidth="150.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="416.0" />
+               </children>
+            </AnchorPane>
                 <BorderPane layoutX="14.0" layoutY="142.0" />
 
                 <Button fx:id="backButton" layoutX="328.0" layoutY="539.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back">
@@ -47,7 +57,7 @@
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Button>
-                <ListView fx:id="appointmentsListView" layoutX="44.0" layoutY="77.0" prefHeight="442.0" prefWidth="335.0" style="-fx-background-color: #639cd9;" />
+                <ListView fx:id="appointmentsListView" layoutX="44.0" layoutY="77.0" prefHeight="398.0" prefWidth="335.0" />
             <Text layoutX="112.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="List of doctors" wrappingWidth="198.89453125">
                <font>
                   <Font name="Century Gothic Bold" size="29.0" />

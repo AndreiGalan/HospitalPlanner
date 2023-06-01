@@ -1,7 +1,6 @@
 package com.example.testui;
 
-import com.example.testui.controllers.MainMenuController;
-import com.example.testui.controllers.ViewAppointmentsController;
+import com.example.testui.controllers.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,12 +21,69 @@ public class SceneManager {
 
     public void showMainMenu(){
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("main-menu.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
             MainMenuController mainMenuController = loader.getController();
             mainMenuController.setSceneManager(this);
+
+
+            stage.setScene(scene);
+            stage.show();
+
+
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void showPatientAppointments(){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("patient-appointments.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
+            PatientAppointmentsController patientAppointmentsController = loader.getController();
+            patientAppointmentsController.setSceneManager(this);
+
+
+            stage.setScene(scene);
+            stage.show();
+
+
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void showDoctorAppointments(){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("doctor-appointments.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
+            DoctorAppointmentsController doctorAppointmentsController = loader.getController();
+            doctorAppointmentsController.setSceneManager(this);
+
+
+            stage.setScene(scene);
+            stage.show();
+
+
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void showPatientData(){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("patient-data.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
+            PatientDataController patientDataController = loader.getController();
+            patientDataController.setSceneManager(this);
 
 
             stage.setScene(scene);
@@ -68,4 +124,6 @@ public class SceneManager {
         dialog.setDialogPane(dialogPane);
         dialog.showAndWait();
     }
+
+
 }

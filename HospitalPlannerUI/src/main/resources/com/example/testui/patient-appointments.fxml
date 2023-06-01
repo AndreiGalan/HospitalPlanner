@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="688.0" prefWidth="825.0" style="-fx-background-color: #eda489;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.testui.controllers.PatientAppointmentsController">
+    <top>
+        <AnchorPane fx:id="topAnchorPane" prefHeight="93.0" prefWidth="846.0" style="-fx-background-color: #639cd9;" BorderPane.alignment="CENTER">
+            <children>
+                <Button layoutX="765.0" layoutY="32.0" mnemonicParsing="false" onAction="#xButtonAction" prefHeight="30.0" prefWidth="20.0" text="X" fx:id="xButton">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font></Button>
+                <Text fill="#3058d0" layoutX="112.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hospital planner">
+                    <font>
+                        <Font name="Century Gothic Bold" size="27.0" />
+                    </font>
+                </Text>
+                <ImageView fitHeight="71.0" fitWidth="83.0" layoutX="24.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@Logo.png" />
+                    </image>
+                </ImageView>
+                <Button fx:id="dropButton" layoutX="721.0" layoutY="32.0" mnemonicParsing="false" onAction="#dropButtonAction" prefHeight="28.0" prefWidth="30.0" text="–">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Button>
+            </children></AnchorPane>
+    </top>
+   <center>
+        <AnchorPane fx:id="centerAnchorPane" prefHeight="724.0" prefWidth="825.0" style="-fx-background-color: #c7eeff;" BorderPane.alignment="CENTER">
+            <children>
+            <AnchorPane layoutX="437.0" layoutY="119.0" prefHeight="357.0" prefWidth="376.0" style="-fx-background-color: #639cd9; -fx-border-radius: 100;" />
+                <BorderPane layoutX="14.0" layoutY="142.0" />
+            <AnchorPane layoutX="20.0" layoutY="119.0" prefHeight="357.0" prefWidth="376.0" style="-fx-background-color: #639cd9; -fx-border-radius: 100;">
+               <children>
+                  <TextField fx:id="lastNameText" layoutX="31.0" layoutY="196.0" prefHeight="25.0" prefWidth="255.0" style="-fx-background-color: white;">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <Text layoutX="177.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(mm/dd/yyyy)">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="31.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of birth ">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="31.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last name">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="30.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First name">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="firstNameText" layoutX="28.0" layoutY="95.0" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: white;">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <DatePicker fx:id="dateOfBirth" layoutX="31.0" layoutY="299.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="188.0">
+                     <effect>
+                        <Glow />
+                     </effect>
+                  </DatePicker>
+               </children>
+            </AnchorPane>
+            <ListView fx:id="patientAppointments" layoutX="451.0" layoutY="128.0" prefHeight="336.0" prefWidth="348.0" />
+            <Button fx:id="searchButton" layoutX="451.0" layoutY="537.0" mnemonicParsing="false" onAction="#searchButtonAction" text="Search">
+               <font>
+                  <Font name="Century Gothic Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="backButton" layoutX="339.0" layoutY="537.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back">
+               <font>
+                  <Font name="Century Gothic Bold" size="15.0" />
+               </font>
+            </Button>
+            <Text layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search your appointments" textAlignment="CENTER" wrappingWidth="825.0">
+               <font>
+                  <Font name="Century Gothic Bold" size="29.0" />
+               </font>
+            </Text>
+            </children>
+        </AnchorPane>
+   </center>
+</BorderPane>

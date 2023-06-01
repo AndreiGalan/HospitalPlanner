@@ -32,12 +32,52 @@
     -fx-text-fill: #ffffff;
 }
 
+#makeAppointment{
+    -fx-background-color: #42408f;
+    -fx-text-fill: #ffffff;
+}
+
+#makeAppointment:hover{
+    -fx-background-color: #000000;
+    -fx-text-fill: #ffffff;
+}
+
+#viewDoctorTimetable{
+    -fx-background-color: #42408f;
+    -fx-text-fill: #ffffff;
+}
+
+#viewDoctorTimetable:hover{
+    -fx-background-color: #000000;
+    -fx-text-fill: #ffffff;
+}
+
+#viewYourAppointments{
+    -fx-background-color: #42408f;
+    -fx-text-fill: #ffffff;
+}
+
+#viewYourAppointments:hover{
+    -fx-background-color: #000000;
+    -fx-text-fill: #ffffff;
+}
+
 #backButton{
     -fx-background-color: #639cd9;
     -fx-text-fill: #ffffff;
 }
 
 #backButton:hover{
+    -fx-background-color: #000000;
+    -fx-text-fill: #ffffff;
+}
+
+#searchButton{
+    -fx-background-color: #639cd9;
+    -fx-text-fill: #ffffff;
+}
+
+#searchButton:hover{
     -fx-background-color: #000000;
     -fx-text-fill: #ffffff;
 }
@@ -49,4 +89,48 @@
 
 #dateApp1, #dateApp2, #dateApp3, #startH1, #startH2, #startH3, #endH1, #endH2, #endH3, startM1, startM2, startM3, endM1, endM2, endM3{
     -fx-font-family: "Century Gothic";
+}
+
+#doctorList{
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 11;
+}
+
+#doctorTimetable{
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 11;
+}
+
+#appointmentsListView{
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 11;
+}
+
+#patientAppointments{
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 11;
+}
+
+#dateAppointment{
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 13;
+}
+
+#filterChoiceBox .context-menu {
+    -fx-pref-height: 220; /* Your width for the context menu background shown */
+}
+
+
+
+.list-view .list-cell:odd {
+    -fx-background-color: #c7eeff;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #639cd9;
+    -fx-text-fill: #ffffff;
+}
+
+.list-view.list-cell:even {
+    -fx-background-color: #ffffff;
 }

@@ -87,6 +87,8 @@ public class AppointmentServiceImpl implements AppointmentService {
                 if(freeInterval.getStart().isBefore(timeInterval.getStart()))
                     freeInterval.setStart(timeInterval.getStart());
 
+                freeInterval.setEnd(freeInterval.getStart().plusMinutes(durationOfAppointment));
+
                 System.out.println(freeInterval);
                 Appointment appointment = Appointment.builder()
                         .appointmentDate(freeInterval.getDate())
@@ -111,7 +113,17 @@ public class AppointmentServiceImpl implements AppointmentService {
         System.out.println(busyAppointments);
         // intre inceperea programului si primului appointment
         LocalTime programStart = doctor.getProgramStart();
+        LocalTime programEnd = doctor.getProgramEnd();
         if(busyAppointments.isEmpty()) {
+            if(start.isAfter(programEnd) || start.equals(programEnd) || end.isBefore(programStart) || end.equals(programStart))
+                throw new RuntimeException("Doctor is not available at this time");
+
+            if(start.plusMinutes(duration).isAfter(programEnd)) {
+                throw new RuntimeException("Doctor is not available at this time");
+            }
+
+            if(start.isBefore(programStart))
+                start = programStart;
             TimeInterval freeInterval = TimeInterval.builder()
                     .date(date)
                     .start(start)
@@ -123,6 +135,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         LocalTime firstBusyAppointmentTime = busyAppointments.get(0).getAppointmentTime();
         if (Duration.between(programStart, firstBusyAppointmentTime).toMinutes() >= duration) {
+
+            if(start.plusMinutes(duration).isAfter(programEnd)) {
+                throw new RuntimeException("Doctor is not available at this time");
+            }
 
             TimeInterval freeInterval = TimeInterval.builder()
                     .date(busyAppointments.get(0).getAppointmentDate())
@@ -154,11 +170,15 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
 
         // intre ultimul appointment si sfarsitul programului
-        LocalTime programEnd = doctor.getProgramEnd();
         Appointment lastBusyAppointment = busyAppointments.get(busyAppointments.size() - 1);
         Integer durationLastBusyAppointment = AppointmentType.valueOf(lastBusyAppointment.getAppointmentType().toUpperCase()).getValue();
         LocalTime completedLastBusyAppointmentTime = lastBusyAppointment.getAppointmentTime().plusMinutes(durationLastBusyAppointment);
         if (Duration.between(completedLastBusyAppointmentTime, programEnd).toMinutes() >= duration) {
+            if(start.isAfter(programEnd) || start.equals(programEnd) || end.isBefore(programStart) || end.equals(programStart))
+                throw new RuntimeException("Doctor is not available at this time");
+            if(start.plusMinutes(duration).isAfter(programEnd)) {
+                throw new RuntimeException("Doctor is not available at this time");
+            }
             TimeInterval freeInterval = TimeInterval.builder()
                     .date(lastBusyAppointment.getAppointmentDate())
                     .start(completedLastBusyAppointmentTime)
@@ -186,6 +206,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public List<Appointment> findByDoctorId(Long Id) {
         List<Appointment> appointments = Optional.ofNullable( appointmentRepository.findByDoctorId(Id)).orElse(new ArrayList<>());
+        System.out.println(appointments);
         return appointments;
     }
 
