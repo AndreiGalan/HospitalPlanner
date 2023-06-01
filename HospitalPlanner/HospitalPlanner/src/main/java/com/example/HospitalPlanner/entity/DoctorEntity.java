@@ -1,9 +1,6 @@
 package com.example.HospitalPlanner.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +17,7 @@ import java.time.LocalTime;
 public class DoctorEntity {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
     @Column(name = "first_name")
     private String firstName;
