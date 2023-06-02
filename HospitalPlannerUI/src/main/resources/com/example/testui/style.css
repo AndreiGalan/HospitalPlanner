@@ -134,3 +134,22 @@
 .list-view.list-cell:even {
     -fx-background-color: #ffffff;
 }
+
+#resetButton{
+    -fx-background-color: #639cd9;
+    -fx-text-fill: #ffffff;
+}
+
+#resetButton:hover{
+    -fx-background-color: #000000;
+    -fx-text-fill: #ffffff;
+}
+
+#searchDoctorButton{
+    -fx-background-color: #c7eeff;
+}
+
+#searchDoctorButton:hover{
+    -fx-background-color: #000000;
+    -fx-text-fill: #ffffff;
+}

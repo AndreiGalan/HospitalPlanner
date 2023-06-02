@@ -94,4 +94,45 @@ public class DoctorFetchController {
         });
         return completableFuture.join();
     }
+
+    public List<DoctorEntity> getDoctorsByFilter(String name, String specialization){
+        CompletableFuture<List<DoctorEntity>> completableFuture =  CompletableFuture.supplyAsync(() -> {
+            try {
+                HttpResponse<String> response = Unirest.get("http://localhost:8199/doctors")
+                        .header("accept", "application/json")
+                        .asString();
+
+                if (response.getStatus() == 200) {
+                    String responseBody = response.getBody();
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    objectMapper.registerModule(new JavaTimeModule());
+                    //System.out.println(responseBody);
+                    List<DoctorEntity> doctorEntityList = objectMapper.readValue(responseBody, new TypeReference<List<DoctorEntity>>() {
+                    });
+
+                    if(name != null && !name.isEmpty()){
+                        if (name.contains(" ")) {
+                            //remove only first space
+                            String[] names = name.split(" ", 2);
+                            doctorEntityList.removeIf(doctorEntity -> !doctorEntity.getFirstName().contains(names[0]) || !doctorEntity.getLastName().contains(names[1]));
+                        } else {
+                            doctorEntityList.removeIf(doctorEntity -> !doctorEntity.getFirstName().equals(name) && !doctorEntity.getLastName().equals(name));
+                        }
+                    }
+
+                    if(specialization != null && !specialization.isEmpty()){
+                        doctorEntityList.removeIf(doctorEntity -> !doctorEntity.getSpecialization().equals(specialization));
+                    }
+
+                    return doctorEntityList;
+                } else {
+                    throw new IOException("Request failed with response code: " + response.getStatus());
+                }
+            } catch (IOException | UnirestException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        return completableFuture.join();
+    }
+
 }

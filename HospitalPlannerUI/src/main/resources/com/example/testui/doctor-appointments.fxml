@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -36,50 +38,72 @@
             </children></AnchorPane>
     </top>
    <right>
-        <AnchorPane fx:id="centerAnchorPane" prefHeight="724.0" prefWidth="825.0" style="-fx-background-color: #c7eeff;" BorderPane.alignment="CENTER">
+        <AnchorPane fx:id="centerAnchorPane" prefHeight="620.0" prefWidth="825.0" style="-fx-background-color: #c7eeff;" BorderPane.alignment="CENTER">
             <children>
                 <BorderPane layoutX="14.0" layoutY="142.0" />
-                <AnchorPane layoutX="20.0" layoutY="119.0" prefHeight="368.0" prefWidth="412.0" style="-fx-background-color: #639cd9; -fx-border-radius: 100;">
+                <AnchorPane layoutX="20.0" layoutY="88.0" prefHeight="432.0" prefWidth="389.0" style="-fx-background-color: #639cd9; -fx-border-radius: 100;">
                <children>
-                  <ListView fx:id="doctorList" layoutX="6.0" layoutY="7.0" prefHeight="311.0" prefWidth="400.0" />
-                  <Text layoutY="348.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select a date" textAlignment="CENTER" wrappingWidth="175.0">
+                  <ListView fx:id="doctorList" layoutX="6.0" layoutY="81.0" prefHeight="273.0" prefWidth="376.0" />
+                  <Text layoutX="6.0" layoutY="380.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select a date" textAlignment="CENTER" wrappingWidth="163.0">
                      <font>
                         <Font name="Century Gothic Bold" size="16.0" />
                      </font>
                   </Text>
-                  <DatePicker fx:id="dateAppointment" layoutX="175.0" layoutY="329.0" />
+                  <DatePicker fx:id="dateAppointment" layoutX="206.0" layoutY="362.0" prefHeight="25.0" prefWidth="167.0" />
+                  <Text layoutX="6.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter by specialization" wrappingWidth="185.89453125">
+                     <font>
+                        <Font name="Century Gothic Bold" size="16.0" />
+                     </font>
+                  </Text>
+                  <ChoiceBox fx:id="filterChoiceBox" layoutX="206.0" layoutY="397.0" onAction="#filterChoiceBoxAction" prefHeight="25.0" prefWidth="168.0" />
+                  <Button fx:id="searchDoctorButton" layoutX="308.0" layoutY="43.0" mnemonicParsing="false" onMouseClicked="#searchDoctorButtonAction" prefHeight="25.0" prefWidth="74.0" text="Search">
+                     <font>
+                        <Font name="Century Gothic Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Text layoutX="6.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name of doctor" wrappingWidth="137.89453125">
+                     <font>
+                        <Font name="Century Gothic Bold" size="17.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="searchField" layoutX="6.0" layoutY="44.0" prefHeight="25.0" prefWidth="233.0" />
                </children>
                 </AnchorPane>
-                <Button fx:id="searchButton" layoutX="451.0" layoutY="537.0" mnemonicParsing="false" onAction="#searchButtonAction" text="Search">
+                <Button fx:id="searchButton" layoutX="451.0" layoutY="546.0" mnemonicParsing="false" onAction="#searchButtonAction" text="Search">
                     <font>
                         <Font name="Century Gothic Bold" size="15.0" />
                     </font>
                 </Button>
-                <Button fx:id="backButton" layoutX="339.0" layoutY="537.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back">
+                <Button fx:id="backButton" layoutX="336.0" layoutY="546.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back">
                     <font>
                         <Font name="Century Gothic Bold" size="15.0" />
                     </font>
                 </Button>
-                <Text layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search doctor timetables" textAlignment="CENTER" wrappingWidth="825.0">
+                <Text layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search doctor timetables" textAlignment="CENTER" wrappingWidth="825.0">
                     <font>
                         <Font name="Century Gothic Bold" size="29.0" />
                     </font>
                 </Text>
-            <AnchorPane layoutX="451.0" layoutY="116.0" prefHeight="371.0" prefWidth="361.0" style="-fx-background-color: #639cd9; -fx-border-radius: 100;">
+            <AnchorPane layoutX="430.0" layoutY="87.0" prefHeight="434.0" prefWidth="381.0" style="-fx-background-color: #639cd9; -fx-border-radius: 100;">
                <children>
-                  <ListView fx:id="doctorTimetable" layoutX="6.0" layoutY="5.0" prefHeight="359.0" prefWidth="349.0" />
+                  <ListView fx:id="doctorTimetable" layoutX="6.0" layoutY="5.0" prefHeight="423.0" prefWidth="369.0" />
                </children>
             </AnchorPane>
-            <Text layoutX="138.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select a doctor" textAlignment="CENTER" wrappingWidth="176.0">
+            <Text layoutX="142.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select a doctor" textAlignment="CENTER" wrappingWidth="176.0">
                <font>
                   <Font name="Century Gothic Bold" size="16.0" />
                </font>
             </Text>
-            <Text layoutX="544.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Doctor timetable" textAlignment="CENTER" wrappingWidth="176.0">
+            <Text layoutX="544.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Doctor timetable" textAlignment="CENTER" wrappingWidth="176.0">
                <font>
                   <Font name="Century Gothic Bold" size="16.0" />
                </font>
             </Text>
+            <Button fx:id="resetButton" layoutX="20.0" layoutY="546.0" mnemonicParsing="false" onAction="#resetButtonAction" text="Reset all filters">
+               <font>
+                  <Font name="Century Gothic Bold" size="15.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
    </right>

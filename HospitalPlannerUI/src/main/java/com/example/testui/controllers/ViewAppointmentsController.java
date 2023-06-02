@@ -79,6 +79,15 @@
         @FXML
         private ChoiceBox<String> filterChoiceBox;
 
+        @FXML
+        private TextField searchField;
+
+        @FXML
+        private Button searchDoctorButton;
+
+        @FXML
+        private Button resetButton;
+
         private String[] appointmentTypes = {"Consultation", "Surgery", "Therapy", "Vaccination"};
 
         private ObservableList<DoctorEntity> doctors = FXCollections.observableArrayList();
@@ -506,8 +515,39 @@
         }
 
         public void filterChoiceBoxAction() {
+            if(doctorFetchController.getDoctorsByFilter(searchField.getText(), filterChoiceBox.getValue()).isEmpty())
+                sceneManager.showPopUp("No doctor found!");
+            else {
+                appointmentsListView.getItems().clear();
+                doctors.addAll(doctorFetchController.getDoctorsByFilter(searchField.getText(), filterChoiceBox.getValue()));
+                appointmentsListView.setItems(doctors);
+            }
+        }
+
+        public void searchButtonAction(){
+            if(!searchField.getText().isEmpty()){
+                searchField.setStyle("-fx-border-color: none; -fx-border-width: none;");
+                if(doctorFetchController.getDoctorsByFilter(searchField.getText(), filterChoiceBox.getValue()).isEmpty())
+                    sceneManager.showPopUp("No doctor found!");
+                else {
+                    appointmentsListView.getItems().clear();
+                    doctors.addAll(doctorFetchController.getDoctorsByFilter(searchField.getText(), filterChoiceBox.getValue()));
+                    appointmentsListView.setItems(doctors);
+                }
+
+            }
+            else {
+                sceneManager.showPopUp("Please enter a name!");
+                searchField.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            }
+        }
+
+        public void resetButtonAction(){
             appointmentsListView.getItems().clear();
-            doctors.addAll(doctorFetchController.getDoctorsBySpecialization(filterChoiceBox.getValue()));
+            doctors.addAll(doctorFetchController.getDoctors());
             appointmentsListView.setItems(doctors);
+            searchField.clear();
+            searchField.setStyle("-fx-border-color: none; -fx-border-width: none;");
+            filterChoiceBox.setValue(null);
         }
     }

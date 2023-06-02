@@ -9,9 +9,7 @@ import com.example.testui.model.TimeInterval;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -56,6 +54,18 @@ public class DoctorAppointmentsController {
 
     private AppointmentFetchController appointmentFetchController = new AppointmentFetchController();
 
+    @FXML
+    private ChoiceBox<String> filterChoiceBox;
+
+    @FXML
+    private TextField searchField;
+
+    @FXML
+    private Button searchDoctorButton;
+
+    @FXML
+    private Button resetButton;
+
 
     @FXML
     private void initialize() {
@@ -65,6 +75,8 @@ public class DoctorAppointmentsController {
             stage.setX(e2.getScreenX() - e.getSceneX());
             stage.setY(e2.getScreenY() - e.getSceneY());
         }));
+
+        filterChoiceBox.getItems().addAll(doctorFetchController.getAllSpecializations());
 
         initializeDoctors();
     }
@@ -90,7 +102,7 @@ public class DoctorAppointmentsController {
             doctorTimetable.getItems().clear();
 
             List<TimeInterval> appointments = appointmentFetchController.getDoctorAppointments(doctorList.getSelectionModel().getSelectedItem().getId(), dateAppointment.getValue());
-            if(appointments != null)
+            if(!appointments.isEmpty())
                 doctorTimetable.getItems().addAll(appointments);
             else
                 sceneManager.showPopUp("No appointments found!");
@@ -120,6 +132,43 @@ public class DoctorAppointmentsController {
     private void initializeDoctors() {
         doctors.addAll(doctorFetchController.getDoctors());
         doctorList.setItems(doctors);
+    }
+
+    public void filterChoiceBoxAction() {
+        if(doctorFetchController.getDoctorsByFilter(searchField.getText(), filterChoiceBox.getValue()).isEmpty())
+            sceneManager.showPopUp("No doctor found!");
+        else {
+            doctorList.getItems().clear();
+            doctors.addAll(doctorFetchController.getDoctorsByFilter(searchField.getText(), filterChoiceBox.getValue()));
+            doctorList.setItems(doctors);
+        }
+    }
+
+    public void searchDoctorButtonAction(){
+        if(!searchField.getText().isEmpty()){
+            searchField.setStyle("-fx-border-color: none; -fx-border-width: none;");
+            if(doctorFetchController.getDoctorsByFilter(searchField.getText(), filterChoiceBox.getValue()).isEmpty())
+                sceneManager.showPopUp("No doctor found!");
+            else {
+                doctorList.getItems().clear();
+                doctors.addAll(doctorFetchController.getDoctorsByFilter(searchField.getText(), filterChoiceBox.getValue()));
+                doctorList.setItems(doctors);
+            }
+
+        }
+        else {
+            sceneManager.showPopUp("Please enter a name!");
+            searchField.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+        }
+    }
+
+    public void resetButtonAction(){
+        doctorList.getItems().clear();
+        doctors.addAll(doctorFetchController.getDoctors());
+        doctorList.setItems(doctors);
+        searchField.clear();
+        searchField.setStyle("-fx-border-color: none; -fx-border-width: none;");
+        filterChoiceBox.setValue(null);
     }
 
 
