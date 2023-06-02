@@ -10,4 +10,6 @@ public interface DoctorService {
     List<DoctorEntity> findAll();
     void delete(Long id);
     List<String> getAllSpecializations();
+
+    DoctorEntity findById(Long id);
 }

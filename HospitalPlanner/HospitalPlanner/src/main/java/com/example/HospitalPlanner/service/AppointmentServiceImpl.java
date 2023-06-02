@@ -1,5 +1,6 @@
 package com.example.HospitalPlanner.service;
 
+import com.example.HospitalPlanner.advice.exceptions.*;
 import com.example.HospitalPlanner.dto.AppointmentCreationDto;
 import com.example.HospitalPlanner.entity.Appointment;
 import com.example.HospitalPlanner.entity.DoctorEntity;
@@ -34,14 +35,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public List<Appointment> findAll() {
-        List<Appointment> appointments = Optional.ofNullable( appointmentRepository.findAll()).orElse(new ArrayList<>());
-        return appointments;
+        return Optional.ofNullable( appointmentRepository.findAll()).orElse(new ArrayList<>());
     }
 
     @Override
     public Appointment findById(Long id) {
-        Appointment appointment = appointmentRepository.findById(id).orElse(null); // TODO - THROW EXCEPTION
-        return appointment;
+        return appointmentRepository.findById(id).orElseThrow(()->new AppointmentNotFoundException(id));
     }
 
     @Override
@@ -49,35 +48,15 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         AppointmentType appointmentType = AppointmentType.getType(appointmentCreationDto.getType());
 
-        if (appointmentType == null) {
-            // Handle invalid appointment type
-            return null;
-        }
-
         Integer durationOfAppointment = appointmentType.getValue();
 
-        DoctorEntity doctor = doctorRepository.findById(appointmentCreationDto.getDoctorId()).orElse(null);
+        DoctorEntity doctor = doctorRepository.findById(appointmentCreationDto.getDoctorId()).orElseThrow(()->new DoctorNotFoundException(appointmentCreationDto.getDoctorId()));
 
-        PatientEntity patient = patientRepository.findById(appointmentCreationDto.getPatientId()).orElse(null);
+        PatientEntity patient = patientRepository.findById(appointmentCreationDto.getPatientId()).orElseThrow(()->new PatientNotFoundException(appointmentCreationDto.getPatientId()));
 
-        if (doctor == null || patient == null) {
-            // Handle invalid doctor or patient
-            return null;
-        }
-        // TODO - THROW CUSTOM EXCEPTION
-
-        List<Appointment> appointmentsDoctor = findByDoctorId(appointmentCreationDto.getDoctorId()).stream()
-                .filter(appointment -> appointmentCreationDto.getTimeIntervals().stream()
-                        .anyMatch(timeInterval -> appointment.getAppointmentDate().equals(timeInterval.getDate())))
-                .toList();
 
         for (TimeInterval timeInterval : appointmentCreationDto.getTimeIntervals()) {
-            List<Appointment> busyAppointments = appointmentsDoctor.stream() // TODO - IMPORT FROM REPO BY DATE AND DOCTOR ID (PLSQL)
-                    .filter(appointment -> appointment.getAppointmentDate().equals(timeInterval.getDate()))
-                    .sorted(Comparator.comparing(Appointment::getAppointmentTime))
-                    .toList();
-
-            //TODO - DISCUTIE despre cum sa facem cu intervalele care sunt la aceeasi data dar nu se suprapun
+            List<Appointment> busyAppointments = appointmentRepository.findByDateAndDoctorId(timeInterval.getDate(),doctor.getId());
 
             List<TimeInterval> freeTimeIntervals = generateFreeIntervals(busyAppointments,doctor,durationOfAppointment, timeInterval.getDate(), timeInterval.getStart(), timeInterval.getEnd());
 
@@ -103,8 +82,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             }
         }
 
-        throw new RuntimeException("Doctor is busy at this time");
-
+        throw new DoctorIsBusyException("Doctor is busy at this time");
 
     }
 
@@ -116,20 +94,21 @@ public class AppointmentServiceImpl implements AppointmentService {
         LocalTime programEnd = doctor.getProgramEnd();
         if(busyAppointments.isEmpty()) {
             if(start.isAfter(programEnd) || start.equals(programEnd) || end.isBefore(programStart) || end.equals(programStart))
-                throw new RuntimeException("Doctor is not available at this time");
+                throw new DoctorIsBusyException("Doctor is not available at this time:" + start + " " + end + " " + date);
 
             if(start.plusMinutes(duration).isAfter(programEnd)) {
-                throw new RuntimeException("Doctor is not available at this time");
+                throw new DoctorIsBusyException("Doctor is not available at this time:" + start + " " + end + " " + date);
             }
 
-            if(start.isBefore(programStart))
-                start = programStart;
+            if(start.isBefore(programStart)) start = programStart;
+
             TimeInterval freeInterval = TimeInterval.builder()
                     .date(date)
                     .start(start)
                     .end(programStart.plusMinutes(duration))
                     .build();
             freeTimeIntervals.add(freeInterval);
+
             return freeTimeIntervals;
         }
 
@@ -137,7 +116,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         if (Duration.between(programStart, firstBusyAppointmentTime).toMinutes() >= duration) {
 
             if(start.plusMinutes(duration).isAfter(programEnd)) {
-                throw new RuntimeException("Doctor is not available at this time");
+                throw new DoctorIsBusyException("Doctor is not available at this time");
             }
 
             TimeInterval freeInterval = TimeInterval.builder()
@@ -175,9 +154,9 @@ public class AppointmentServiceImpl implements AppointmentService {
         LocalTime completedLastBusyAppointmentTime = lastBusyAppointment.getAppointmentTime().plusMinutes(durationLastBusyAppointment);
         if (Duration.between(completedLastBusyAppointmentTime, programEnd).toMinutes() >= duration) {
             if(start.isAfter(programEnd) || start.equals(programEnd) || end.isBefore(programStart) || end.equals(programStart))
-                throw new RuntimeException("Doctor is not available at this time");
+                throw new DoctorIsBusyException("Doctor is not available at this time");
             if(start.plusMinutes(duration).isAfter(programEnd)) {
-                throw new RuntimeException("Doctor is not available at this time");
+                throw new DoctorIsBusyException("Doctor is not available at this time");
             }
             TimeInterval freeInterval = TimeInterval.builder()
                     .date(lastBusyAppointment.getAppointmentDate())
@@ -188,7 +167,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 freeTimeIntervals.add(freeInterval);
         }
 
-        Collections.sort(freeTimeIntervals, Comparator.comparingLong(interval -> Duration.between(interval.getStart(), interval.getEnd()).toMinutes()));
+        freeTimeIntervals.sort(Comparator.comparingLong(interval -> Duration.between(interval.getStart(), interval.getEnd()).toMinutes()));
 
         System.out.println(freeTimeIntervals);
 
@@ -204,20 +183,27 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public List<Appointment> findByDoctorId(Long Id) {
-        List<Appointment> appointments = Optional.ofNullable( appointmentRepository.findByDoctorId(Id)).orElse(new ArrayList<>());
+    public List<Appointment> findByDoctorId(Long id) {
+        doctorRepository.findById(id).orElseThrow(()-> new DoctorNotFoundException(id));
+        List<Appointment> appointments = Optional.ofNullable( appointmentRepository.findByDoctorId(id)).orElse(new ArrayList<>());
         System.out.println(appointments);
         return appointments;
     }
 
     @Override
-    public List<Appointment> findByPatientId(Long Id) {
-        List<Appointment> appointments = Optional.ofNullable( appointmentRepository.findByPatientId(Id)).orElse(new ArrayList<>()) ;
-        return appointments;
+    public List<Appointment> findByPatientId(Long id) {
+        patientRepository.findById(id).orElseThrow(()-> new PatientNotFoundException(id));
+        return Optional.ofNullable( appointmentRepository.findByPatientId(id)).orElse(new ArrayList<>());
+    }
+    @Override
+    public List<Appointment> getByDateIdAndDate(Long doctorId, LocalDate date) {
+        doctorRepository.findById(doctorId).orElseThrow(()-> new DoctorNotFoundException(doctorId));
+        return Optional.ofNullable( appointmentRepository.findByDateAndDoctorId(date,doctorId)).orElse(new ArrayList<>());
     }
 
     @Override
     public void delete(Long id) {
+        appointmentRepository.findById(id).orElseThrow(() -> new AppointmentNotFoundException(id));
         appointmentRepository.deleteById(id);
     }
 }

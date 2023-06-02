@@ -1,5 +1,7 @@
 package com.example.HospitalPlanner.service;
 
+import com.example.HospitalPlanner.advice.exceptions.DoctorNotFoundException;
+import com.example.HospitalPlanner.advice.exceptions.EntityNotFoundException;
 import com.example.HospitalPlanner.entity.DoctorEntity;
 import com.example.HospitalPlanner.repo.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,12 @@ public class DoctorServiceImpl implements DoctorService {
         System.out.println(doctorEntities);
         return doctorEntities;
     }
+
+    public DoctorEntity findById(Long id) {
+        return doctorRepository.findById(id).orElseThrow(()->new DoctorNotFoundException(id));
+    }
     public void delete(Long id) {
+        doctorRepository.findById(id).orElseThrow(()->new DoctorNotFoundException(id));
         doctorRepository.deleteById(id);
     }
 

@@ -3,6 +3,7 @@ package com.example.HospitalPlanner.controllers;
 import com.example.HospitalPlanner.entity.DoctorEntity;
 import com.example.HospitalPlanner.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,17 +18,23 @@ public class DoctorController {
         this.doctorService = doctorService;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<DoctorEntity> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(doctorService.findById(id));
+    }
+
     @GetMapping("")
-    public List<DoctorEntity> findAll() {
-        return doctorService.findAll();
+    public ResponseEntity<List<DoctorEntity>> findAll() {
+        return ResponseEntity.ok(doctorService.findAll());
     }
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void>  delete(@PathVariable Long id) {
         doctorService.delete(id);
+        return ResponseEntity.noContent().build() ;
     }
 
     @GetMapping("/specializations")
-    public List<String> getAllSpecializations() {
-        return doctorService.getAllSpecializations();
+    public ResponseEntity<List<String>> getAllSpecializations() {
+        return ResponseEntity.ok(doctorService.getAllSpecializations());
     }
 }

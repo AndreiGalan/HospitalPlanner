@@ -1,15 +1,13 @@
 package com.example.HospitalPlanner.service;
 
-import com.example.HospitalPlanner.entity.DoctorEntity;
+import com.example.HospitalPlanner.advice.exceptions.PatientNotFoundException;
 import com.example.HospitalPlanner.entity.PatientEntity;
-import com.example.HospitalPlanner.repo.DoctorRepository;
 import com.example.HospitalPlanner.repo.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -34,8 +32,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientEntity findById(Long id) {
-        PatientEntity patientEntity = patientRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Patient not found"));
-        return patientEntity;
+        return patientRepository.findById(id).orElseThrow(() -> new PatientNotFoundException(id));
     }
 
     public PatientEntity create(PatientEntity patientEntity) {
@@ -45,14 +42,33 @@ public class PatientServiceImpl implements PatientService {
         if(patient == null) {
             patientRepository.save(patientEntity);
             patient = patientRepository.findPatient(patientEntity.getLastName(), patientEntity.getFirstName(), patientEntity.getDateOfBirth());
+            return patient;
         }
-        // TODO: complete this
+
         patientEntity.setId(patient.getId());
-        patientRepository.save(patientEntity);
-        return patient;
+
+        saveExistingUser(patientEntity, patient);
+
+        return patientEntity;
+    }
+
+    private void saveExistingUser(PatientEntity patientEntity,PatientEntity patientFromDb) {
+        patientRepository.save(PatientEntity.builder()
+                .id(patientEntity.getId())
+                .firstName(patientEntity.getFirstName())
+                .lastName(patientEntity.getLastName())
+                .dateOfBirth(patientEntity.getDateOfBirth())
+                .phoneNumber(patientEntity.getPhoneNumber() == null ? patientEntity.getPhoneNumber() : patientFromDb.getPhoneNumber())
+                .address(patientEntity.getAddress() == null ? patientEntity.getAddress() : patientFromDb.getAddress())
+                .email(patientEntity.getEmail() ==null ? patientEntity.getEmail() : patientFromDb.getEmail())
+                .build());
     }
 
     public PatientEntity findPatient(String lastName, String firstName, LocalDate birthDate) {
+
+        if(lastName == null || firstName == null || birthDate == null) {
+            throw new RuntimeException("Invalid arguments");
+        }
 
         return patientRepository.findPatient(lastName, firstName, birthDate);
     }

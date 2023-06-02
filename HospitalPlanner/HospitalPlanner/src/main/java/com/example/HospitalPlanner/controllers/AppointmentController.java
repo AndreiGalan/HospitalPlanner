@@ -5,9 +5,11 @@ import com.example.HospitalPlanner.entity.Appointment;
 import com.example.HospitalPlanner.service.AppointmentService;
 import com.example.HospitalPlanner.util.TimeInterval;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -22,7 +24,6 @@ public class AppointmentController {
 
     @GetMapping(value = "", produces = "application/json")
     public ResponseEntity<List<Appointment>> findAll() {
-        System.out.println("find all");
         List<Appointment> appointments = appointmentService.findAll();
         return ResponseEntity.ok(appointments);
     }
@@ -39,21 +40,28 @@ public class AppointmentController {
         return ResponseEntity.ok(appointments);
     }
 
-    @GetMapping(value = "/id", produces = "application/json")
+    @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<Appointment> findById(@PathVariable("id") Long id) {
         Appointment appointment = appointmentService.findById(id);
         return ResponseEntity.ok(appointment);
     }
 
+    @GetMapping(value = "/doctor={id}", produces = "application/json")
+    public ResponseEntity<List<Appointment>> findByDateAndDoctorId(@PathVariable("id") Long id,@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        List<Appointment> appointments = appointmentService.getByDateIdAndDate(id, date);
+        return ResponseEntity.ok(appointments);
+    }
+
     @PostMapping(value = "/create", produces = "application/json")
-    public TimeInterval create(@RequestBody AppointmentCreationDto appointmentCreationDto) {
-        System.out.println("create");
-        return appointmentService.create(appointmentCreationDto);
+    public ResponseEntity<TimeInterval> create(@RequestBody AppointmentCreationDto appointmentCreationDto) {
+        return ResponseEntity.ok( appointmentService.create(appointmentCreationDto));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         appointmentService.delete(id);
+        return ResponseEntity.noContent().build();
     }
+
 
 }

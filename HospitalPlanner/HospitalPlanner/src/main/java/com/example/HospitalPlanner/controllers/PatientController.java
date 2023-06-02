@@ -5,6 +5,7 @@ import com.example.HospitalPlanner.entity.PatientEntity;
 import com.example.HospitalPlanner.service.DoctorService;
 import com.example.HospitalPlanner.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,26 +21,27 @@ public class PatientController {
     }
 
     @GetMapping("")
-    public List<PatientEntity> findAll() {
-        return patientService.findAll();
+    public ResponseEntity<List<PatientEntity>>findAll() {
+        return ResponseEntity.ok( patientService.findAll());
     }
 
     @GetMapping("/{id}")
-    public PatientEntity findById(@PathVariable("id") Long id) {
-        return patientService.findById(id);
+    public  ResponseEntity<PatientEntity> findById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(patientService.findById(id));
     }
 
     @PostMapping("/create")
-    public PatientEntity create(@RequestBody PatientEntity patientEntity) {
-        return patientService.create(patientEntity);
+    public ResponseEntity<PatientEntity> create(@RequestBody PatientEntity patientEntity) {
+        return ResponseEntity.ok(patientService.create(patientEntity)) ;
     }
 
     @GetMapping("/find")
-    public PatientEntity findPatient(@RequestBody PatientEntity patientEntity) {
-        return patientService.findPatient(patientEntity.getLastName(), patientEntity.getFirstName(), patientEntity.getDateOfBirth());
+    public ResponseEntity<PatientEntity> findPatient(@RequestBody PatientEntity patientEntity) {
+        return ResponseEntity.ok(patientService.findPatient(patientEntity.getLastName(), patientEntity.getFirstName(), patientEntity.getDateOfBirth()));
     }
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         patientService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
